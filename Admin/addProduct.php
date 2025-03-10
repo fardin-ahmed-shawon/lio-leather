@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       // Execute the query
       if ($stmt->execute()) {
-          echo "Product added successfully.";
+        $product_added_status = "Product Added Successful!";
       } else {
           echo "Error: " . $stmt->error;
       }
@@ -92,6 +92,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <style>
+      #success-box {
+        max-width: 800px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding: 20px;
+        color: #0A3622;
+        background: #D1E7DD;
+      }
+    </style>
+
   </head>
   <body>
     <div class="container-scroller">
@@ -117,6 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               </h3>
             </div>
             <br>
+            <?php
+            if (isset($product_added_status)) {
+              echo '<div id="success-box">'.$product_added_status.'</div>';
+            }
+            ?>
             <div class="row">
               <div class="form-container">
                 <h1 class="text-center">Add Product</h1>
@@ -220,17 +237,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <!-- image 2 -->
                         <div>
-                          <span class="details">Attach Image 2 *</span>
+                          <span class="details">Attach Image 2</span>
                           <input type="file" name="product_img2" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 3 -->
                         <div>
-                          <span class="details">Attach Image 3 *</span>
+                          <span class="details">Attach Image 3</span>
                           <input type="file" name="product_img3" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 4 -->
                         <div>
-                          <span class="details">Attach Image 4 *</span>
+                          <span class="details">Attach Image 4</span>
                           <input type="file" name="product_img4" id="file" class="inputfile"/><br>
                         </div>
                       </div>
