@@ -1,5 +1,9 @@
 <?php
 header('Content-Type: application/json');
+header('Cache-Control: no-cache, no-store, must-revalidate'); // Prevent caching
+header('Pragma: no-cache'); // HTTP 1.0
+header('Expires: 0'); // Proxies
+
 include 'database/dbConnection.php';
 
 $sql = "SELECT * FROM product_info";

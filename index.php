@@ -157,7 +157,9 @@ include 'cartBar.php';
                             <p>$item[sub_ctg_name]</p>
                             <h6>Tk. $item[product_price]</h6>
                             <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
-                            <button onclick='openProduct(\"$item[product_id]\")' class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
+                            <a href='product.php?pi=$item[product_id]'>
+                                <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
+                            </a>
                         </div>
                     </div>";
                     }
