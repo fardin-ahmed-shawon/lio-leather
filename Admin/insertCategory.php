@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("sss", $main_ctg_name, $main_ctg_des, $main_ctg_img);
 
         if ($stmt->execute()) {
-            echo "Main category inserted successfully.";
+          $category_added_status = "Main Category Added Successfully!";
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
           // Execute the statement
           if ($stmt->execute()) {
-              echo "Subcategory added successfully.";
+            $category_added_status = "Sub Category Added Successfully!";
           } else {
               echo "Error: " . $stmt->error;
           }
@@ -69,6 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <style>
+      #success-box {
+        max-width: 800px;
+        margin: auto;
+        text-align: center;
+        font-size: 18px;
+        padding: 20px;
+        color: #0A3622;
+        background: #D1E7DD;
+      }
+    </style>
+
   </head>
   <body>
     <div class="container-scroller">
@@ -94,6 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               </h3>
             </div>
             <br>
+            <?php
+            if (isset($category_added_status)) {
+              echo '<div id="success-box">'.$category_added_status.'</div>';
+            }
+            ?>
             <div class="row">
               <div class="form-container">
                 <h1 class="text-center">Add Main Category</h1>
@@ -179,3 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="assets/js/misc.js"></script>
   </body>
 </html>
+<?php 
+$conn->close();
+?>
