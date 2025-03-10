@@ -233,21 +233,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- main image -->
                         <div>
                           <span class="details">Attach Primary Image *</span>
+                          <h4>(800 X 800)</h4>
                           <input type="file" name="product_img1" id="file" class="inputfile" required/><br>
                         </div>
                         <!-- image 2 -->
                         <div>
                           <span class="details">Attach Image 2</span>
+                          <h4>(800 X 800)</h4>
                           <input type="file" name="product_img2" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 3 -->
                         <div>
                           <span class="details">Attach Image 3</span>
+                          <h4>(800 X 800)</h4>
                           <input type="file" name="product_img3" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 4 -->
                         <div>
                           <span class="details">Attach Image 4</span>
+                          <h4>(800 X 800)</h4>
                           <input type="file" name="product_img4" id="file" class="inputfile"/><br>
                         </div>
                       </div>
