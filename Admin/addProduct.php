@@ -1,5 +1,6 @@
 <?php
-error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
 if (!isset($_SESSION['admin'])) {
     header("Location: login.php");
@@ -8,70 +9,104 @@ if (!isset($_SESSION['admin'])) {
 
 include('database/dbConnection.php'); // Include database connection file
 
+// Image Compression Function
+function compressImage($source, $destination, $quality = 75) {
+    $imgInfo = getimagesize($source);
+    if (!$imgInfo) return false;
+
+    $mime = $imgInfo['mime'];
+    switch ($mime) {
+        case 'image/jpeg': $image = imagecreatefromjpeg($source); break;
+        case 'image/png': $image = imagecreatefrompng($source); break;
+        case 'image/webp': $image = imagecreatefromwebp($source); break;
+        default: return false;
+    }
+
+    // Resize Image to 800x800 (Square Shape)
+    $newWidth = 800;
+    $newHeight = 800;
+    $newImage = imagecreatetruecolor($newWidth, $newHeight);
+    imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($image), imagesy($image));
+    $image = $newImage;
+
+    // Save Compressed Image
+    switch ($mime) {
+        case 'image/jpeg': imagejpeg($image, $destination, $quality); break;
+        case 'image/png': imagepng($image, $destination, round($quality / 10)); break;
+        case 'image/webp': imagewebp($image, $destination, $quality); break;
+    }
+    imagedestroy($image);
+    return true;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $product_title = $_POST['product_title'];
-  $product_price = $_POST['product_price'];
-  $product_main_ctg_name = $_POST['product_main_ctg_name'];
-  $product_sub_ctg_name = $_POST['product_sub_ctg_name'];
-  $available_stock = $_POST['available_stock'];
-  $size_option = "Default";
-  $product_keyword = $_POST['product_keyword'];
-  $product_description = $_POST['product_description'];
+    $product_title = $_POST['product_title'];
+    $product_price = $_POST['product_price'];
+    $product_main_ctg_name = $_POST['product_main_ctg_name'];
+    $product_sub_ctg_name = $_POST['product_sub_ctg_name'];
+    $available_stock = $_POST['available_stock'];
+    $size_option = "Default";
+    $product_keyword = $_POST['product_keyword'];
+    $product_description = $_POST['product_description'];
 
-  // Image 1
-  $file_name = $_FILES['product_img1']['name'];
-  $tempname = $_FILES['product_img1']['tmp_name'];
-  $folder = '../img/'.$file_name;
+    // Array to store image details
+    $images = [
+        ['name' => $_FILES['product_img1']['name'], 'tmp_name' => $_FILES['product_img1']['tmp_name']],
+        ['name' => $_FILES['product_img2']['name'], 'tmp_name' => $_FILES['product_img2']['tmp_name']],
+        ['name' => $_FILES['product_img3']['name'], 'tmp_name' => $_FILES['product_img3']['tmp_name']],
+        ['name' => $_FILES['product_img4']['name'], 'tmp_name' => $_FILES['product_img4']['tmp_name']]
+    ];
 
-  // Image 2
-  $file_name2 = $_FILES['product_img2']['name'];
-  $tempname2 = $_FILES['product_img2']['tmp_name'];
-  $folder2 = '../img/'.$file_name2;
+    $uploadSuccess = true;
+    $originalFiles = [];
+    $compressedFiles = [];
 
-  // Image 3
-  $file_name3 = $_FILES['product_img3']['name'];
-  $tempname3 = $_FILES['product_img3']['tmp_name'];
-  $folder3 = '../img/'.$file_name3;
+    foreach ($images as $index => $image) {
+        if (!empty($image['name'])) {
+            $folder = '../img/' . basename($image['name']);
+            $compressed_folder = '../img/compressed_' . basename($image['name']);
 
-  // Image 4
-  $file_name4 = $_FILES['product_img4']['name'];
-  $tempname4 = $_FILES['product_img4']['tmp_name'];
-  $folder4 = '../img/'.$file_name4;
+            if (move_uploaded_file($image['tmp_name'], $folder)) {
+                if (compressImage($folder, $compressed_folder, 60)) {
+                    $originalFiles[] = $folder; // Track the original file
+                    $compressedFiles[] = $compressed_folder; // Track the compressed file
+                } else {
+                    $uploadSuccess = false;
+                    break;
+                }
+            } else {
+                $uploadSuccess = false;
+                break;
+            }
+        } else {
+            $compressedFiles[] = null; // No file uploaded for this index
+        }
+    }
 
-  // Move the uploaded files to the desired folder
-  $uploadSuccess = true;
-  if (!empty($file_name) && !move_uploaded_file($tempname, $folder)) {
-      $uploadSuccess = false;
-  }
-  if (!empty($file_name2) && !move_uploaded_file($tempname2, $folder2)) {
-      $uploadSuccess = false;
-  }
-  if (!empty($file_name3) && !move_uploaded_file($tempname3, $folder3)) {
-      $uploadSuccess = false;
-  }
-  if (!empty($file_name4) && !move_uploaded_file($tempname4, $folder4)) {
-      $uploadSuccess = false;
-  }
+    if ($uploadSuccess) {
+        // Prepare the SQL query
+        $query = "INSERT INTO product_info (product_title, product_price, main_ctg_name, sub_ctg_name, available_stock, size_option, product_keyword, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sdssisssssss", $product_title, $product_price, $product_main_ctg_name, $product_sub_ctg_name, $available_stock, $size_option, $product_keyword, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3]);
 
-  if ($uploadSuccess) {
-      // Prepare the SQL query
-      $query = "INSERT INTO product_info (product_title, product_price, main_ctg_name, sub_ctg_name, available_stock, size_option, product_keyword, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-      
-      $stmt = $conn->prepare($query);
-      $stmt->bind_param("sdssisssssss", $product_title, $product_price, $product_main_ctg_name, $product_sub_ctg_name, $available_stock, $size_option, $product_keyword, $product_description, $file_name, $file_name2, $file_name3, $file_name4);
+        // Execute the query
+        if ($stmt->execute()) {
+            $product_added_status = "Product Added Successfully!";
+            // Delete the original images after successful database entry
+            foreach ($originalFiles as $file) {
+                unlink($file);
+            }
+        } else {
+            echo "Error: " . $stmt->error;
+        }
 
-      // Execute the query
-      if ($stmt->execute()) {
-        $product_added_status = "Product Added Successful!";
-      } else {
-          echo "Error: " . $stmt->error;
-      }
-
-  } else {
-      echo "Failed to upload one or more images.";
-  }
+    } else {
+        echo "Failed to upload one or more images.";
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <meta charset="utf-8">
@@ -286,3 +321,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   </body>
 </html>
+<?php 
+$conn->close();
+?>
