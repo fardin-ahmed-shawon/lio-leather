@@ -8,18 +8,16 @@ if (!isset($_SESSION['admin'])) {
 
 include('database/dbConnection.php'); // Include database connection file
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $product_title = $_POST['product_title'];
   $product_price = $_POST['product_price'];
   $product_main_ctg_name = $_POST['product_main_ctg_name'];
   $product_sub_ctg_name = $_POST['product_sub_ctg_name'];
   $available_stock = $_POST['available_stock'];
-  // $size_option = $_POST['size_option'];
   $size_option = "Default";
   $product_keyword = $_POST['product_keyword'];
   $product_description = $_POST['product_description'];
-  
+
   // Image 1
   $file_name = $_FILES['product_img1']['name'];
   $tempname = $_FILES['product_img1']['tmp_name'];
@@ -40,9 +38,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $tempname4 = $_FILES['product_img4']['tmp_name'];
   $folder4 = '../img/'.$file_name4;
 
-  // Move the uploaded file to the desired folder
-  
-  if (move_uploaded_file($tempname, $folder) && move_uploaded_file($tempname2, $folder2) && move_uploaded_file($tempname3, $folder3) && move_uploaded_file($tempname4, $folder4)) {
+  // Move the uploaded files to the desired folder
+  $uploadSuccess = true;
+  if (!empty($file_name) && !move_uploaded_file($tempname, $folder)) {
+      $uploadSuccess = false;
+  }
+  if (!empty($file_name2) && !move_uploaded_file($tempname2, $folder2)) {
+      $uploadSuccess = false;
+  }
+  if (!empty($file_name3) && !move_uploaded_file($tempname3, $folder3)) {
+      $uploadSuccess = false;
+  }
+  if (!empty($file_name4) && !move_uploaded_file($tempname4, $folder4)) {
+      $uploadSuccess = false;
+  }
+
+  if ($uploadSuccess) {
       // Prepare the SQL query
       $query = "INSERT INTO product_info (product_title, product_price, main_ctg_name, sub_ctg_name, available_stock, size_option, product_keyword, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       
@@ -51,21 +62,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       // Execute the query
       if ($stmt->execute()) {
-          echo "Product added successfully with image.";
+          echo "Product added successfully.";
       } else {
           echo "Error: " . $stmt->error;
       }
 
   } else {
-      echo "Failed to upload image.";
+      echo "Failed to upload one or more images.";
   }
 }
-/* <?php if ($success_message): ?>
-      <div class="alert alert-success">
-      <?php echo $success_message; ?>
-      </div>
-    <?php endif; ?>
-*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
