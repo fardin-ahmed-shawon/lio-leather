@@ -62,65 +62,65 @@ include 'cartBar.php';
                 if ($result->num_rows > 0) {
                     $product = $result->fetch_assoc();
                     echo "
-                    <div class='product-container' product-id='$product[product_id]' product-title='$product[product_title]' product-img='Admin/$product[product_img1]' product-price='$product[product_price]' product-quantity='$quantity'>
-                        <div class='product-images'>
-                            <div class='img-thumb'>
-                                <img id='main-image' src='img/{$product['product_img1']}' alt='Product Image'>
-                                <div class='img-small'>
-                                    <img src='img/{$product['product_img1']}' alt='Thumbnail 1' onclick='changeImage(\"img/{$product['product_img1']}\")'>
-                                    <img src='img/{$product['product_img2']}' alt='Thumbnail 2' onclick='changeImage(\"img/{$product['product_img2']}\")'>
-                                    <img src='img/{$product['product_img3']}' alt='Thumbnail 3' onclick='changeImage(\"img/{$product['product_img3']}\")'>
-                                    <img src='img/{$product['product_img4']}' alt='Thumbnail 4' onclick='changeImage(\"img/{$product['product_img4']}\")'>
+                        <div class='product-container' product-id='$product[product_id]' product-title='$product[product_title]' product-img='Admin/$product[product_img1]' product-price='$product[product_price]' product-quantity='$quantity'>
+                            <div class='product-images'>
+                                <div class='img-thumb'>
+                                    <img id='main-image' src='img/{$product['product_img1']}' alt='Product Image'>
+                                    <div class='img-small'>
+                                        <img src='img/{$product['product_img1']}' alt='Thumbnail 1' onclick='changeImage(\"img/{$product['product_img1']}\")'>
+                                        <img src='img/{$product['product_img2']}' alt='Thumbnail 2' onclick='changeImage(\"img/{$product['product_img2']}\")'>
+                                        <img src='img/{$product['product_img3']}' alt='Thumbnail 3' onclick='changeImage(\"img/{$product['product_img3']}\")'>
+                                        <img src='img/{$product['product_img4']}' alt='Thumbnail 4' onclick='changeImage(\"img/{$product['product_img4']}\")'>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class='product-details'>
-                            <div>
-                                <h2 class='js-waypoint-sticky'>{$product['product_title']}</h2>
-                                <br>
-                                <p class='description'>{$product['product_description']}</p>
-                                <h3 class='price'>Tk. {$product['product_price']}</h3>
-                                <br>
-                                <h6>Select Size:</h6>
-                                <div class='product-size-container'>
-                                    <div class='pt-2'>
-                                        <input type='radio' id='s' name='size' value='S'>
-                                        <label for='s'>S</label>
+                            <div class='product-details'>
+                                <div>
+                                    <h2 class='js-waypoint-sticky'>{$product['product_title']}</h2>
+                                    <br>
+                                    <p class='description'>{$product['product_description']}</p>
+                                    <h3 class='price'>Tk. {$product['product_price']}</h3>
+                                    <br>
+                                    <h6>Select Size:</h6>
+                                    <div class='product-size-container'>
+                                        <div class='pt-2'>
+                                            <input type='radio' id='s' name='size' value='S'>
+                                            <label for='s'>S</label>
+                                        </div>
+                                        <div class='pt-2'>
+                                            <input type='radio' id='m' name='size' value='M'>
+                                            <label for='m'>M</label>
+                                        </div>
+                                        <div class='pt-2'>
+                                            <input type='radio' id='l' name='size' value='L'>
+                                            <label for='l'>L</label>
+                                        </div>
+                                        <div class='pt-2'>
+                                            <input type='radio' id='xl' name='size' value='XL'>
+                                            <label for='xl'>XL</label>
+                                        </div>
+                                        <div class='pt-2'>
+                                            <input type='radio' id='xxl' name='size' value='XXL'>
+                                            <label for='xxl'>XXL</label>
+                                        </div>
                                     </div>
-                                    <div class='pt-2'>
-                                        <input type='radio' id='m' name='size' value='M'>
-                                        <label for='m'>M</label>
+                                    <br>
+                                    <div class='btn-and-counter'>
+                                        <div class='counter'>
+                                            <button onclick='minus()' class='minus'>-</button>
+                                            <span class='num'>$quantity</span>
+                                            <button onclick='plus()' class='plus'>+</button>
+                                        </div>
+                                        <button onclick='addProductToCart(this)' class='btn btn-danger add-cart'>
+                                            <span>Add to Cart</span> <i class='ri-shopping-bag-line'></i>
+                                        </button>
                                     </div>
-                                    <div class='pt-2'>
-                                        <input type='radio' id='l' name='size' value='L'>
-                                        <label for='l'>L</label>
-                                    </div>
-                                    <div class='pt-2'>
-                                        <input type='radio' id='xl' name='size' value='XL'>
-                                        <label for='xl'>XL</label>
-                                    </div>
-                                    <div class='pt-2'>
-                                        <input type='radio' id='xxl' name='size' value='XXL'>
-                                        <label for='xxl'>XXL</label>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class='btn-and-counter'>
-                                    <div class='counter'>
-                                        <button onclick='minus()' class='minus'>-</button>
-                                        <span class='num'>$quantity</span>
-                                        <button onclick='plus()' class='plus'>+</button>
-                                    </div>
-                                    <button onclick='addProductToCart(this)' class='btn btn-danger add-cart'>
-                                        <span>Add to Cart</span> <i class='ri-shopping-bag-line'></i>
+                                    <button onclick='window.location.href=\"viewCart.php\";' class='btn btn-dark buy-now'>
+                                        <span>View Cart</span> <i class='ri-shopping-cart-2-line'></i>
                                     </button>
                                 </div>
-                                <button onclick='window.location.href=\"viewCart.php\";' class='btn btn-dark buy-now'>
-                                    <span>View Cart</span> <i class='ri-shopping-cart-2-line'></i>
-                                </button>
                             </div>
-                        </div>
-                    </div>    
+                        </div>    
                     ";
                 }
             ?>
