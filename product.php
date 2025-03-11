@@ -108,7 +108,7 @@ include 'cartBar.php';
                                 <div class='btn-and-counter'>
                                     <div class='counter'>
                                         <button onclick='minus()' class='minus'>-</button>
-                                        <span class='num'>1</span>
+                                        <span class='num'>$quantity</span>
                                         <button onclick='plus()' class='plus'>+</button>
                                     </div>
                                     <button onclick='addProductToCart(this)' class='btn btn-danger add-cart'>
