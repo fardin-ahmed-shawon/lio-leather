@@ -62,7 +62,7 @@ include 'cartBar.php';
                 if ($result->num_rows > 0) {
                     $product = $result->fetch_assoc();
                     echo "
-                    <div class='product-container' product-id='$product[product_id]' product-title='$product[product_title]' product-img='img/$product[product_img1]' product-price='$product[product_price]' product-quantity='$quantity'>
+                    <div class='product-container' product-id='$product[product_id]' product-title='$product[product_title]' product-img='Admin/$product[product_img1]' product-price='$product[product_price]' product-quantity='$quantity'>
                         <div class='product-images'>
                             <div class='img-thumb'>
                                 <img id='main-image' src='img/{$product['product_img1']}' alt='Product Image'>
