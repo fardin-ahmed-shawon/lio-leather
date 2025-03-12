@@ -30,45 +30,62 @@ include 'header.php';
 include 'cartBar.php';
 ?>
 
+<?php 
+include 'database/dbConnection.php';
+
+$main_category_id = $_GET['main_ctg_id'];
+
+$sql = "SELECT * FROM main_category WHERE main_ctg_id='$main_category_id'";
+$result = mysqli_query($conn, $sql);
+
+while ($item = mysqli_fetch_array($result)) {
+    $main_category_name = $item['main_ctg_name'];
+    $main_category_des = $item['main_ctg_des'];
+}
+?>
 
 <!--==========================================-->
 <!--============ START CATEGORY SECTION ==========-->
 <!--==========================================-->
 <div class="pb-5 js-waypoint-sticky">
-    <!-- Men's Fashion -->
+    <!-- Category -->
     <section class="py-5">
         <div class="container">
-            <h1>Men's Fashion</h1>
-            <p>Explore all the men's product</p>
+            <h1><?php echo $main_category_name ?></h1>
+            <p><?php echo $main_category_des ?></p>
             <br><br>
-            <form class="form-group" action="#">
+            <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="searchBar" placeholder="Search Product..." class="form-control py-3">
-            </form>
+            </form> -->
             <br>
         </div>
         <div class="bg-gray">
             <div class="container grid-container py-5 mens-fashion-products">
-                <!-- Men's Product Will Add Automatically -->
-                <?php
-                    include 'database/dbConnection.php';
-
-                    $sql = "SELECT * FROM product_info";
-                    $result = mysqli_query($conn, $sql);
-                    
-                    $products = array();
-                    while ($item = mysqli_fetch_array($result)) {
-                        echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
-                        <img src='img/$item[product_img1]' class='card-img-top' alt='img'>
-                        <div class='card-body'>
-                            <h6>$item[product_title]</h6>
-                            <p>$item[sub_ctg_name]</p>
-                            <h6>Tk. $item[product_price]</h6>
-                            <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
-                            <button onclick='openProduct(\"$item[product_id]\")' class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
-                        </div>
-                    </div>";
-                    }
-                ?>
+                <!-- Product Will Add Automatically -->             
+                    <?php
+                        $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                                FROM product_info 
+                                JOIN main_category 
+                                ON product_info.main_ctg_id = main_category.main_ctg_id
+                                WHERE product_info.main_ctg_id='$main_category_id'";
+                        $result = mysqli_query($conn, $sql);
+                        
+                        $products = array();
+                        while ($item = mysqli_fetch_array($result)) {
+                            echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                            <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                            <div class='card-body'>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                                <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
+                                <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
+                                <a href='product.php?pi=$item[product_id]'>
+                                    <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
+                                </a>
+                            </div>
+                        </div>";
+                        }
+                    ?>
             </div>
         </div>
     </section>
@@ -113,3 +130,7 @@ include 'bottomNavBar.php';
 
 </body>
 </html>
+<?php
+// Close the connection
+mysqli_close($conn);
+?>

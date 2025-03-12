@@ -69,8 +69,8 @@ if (!isset($_SESSION['admin'])) {
                                   <h6>{$item['product_title']}</h6>
                                   <h4>ID: {$item['product_id']}</h4>
                                   <p>Keyword: {$item['product_keyword']}</p>
-                                  <p>Main Category: {$item['main_ctg_name']}</p>
-                                  <p>Sub Category: {$item['sub_ctg_name']}</p>
+                                  <p>Main Category: {$item['main_ctg_id']}</p>
+                                  <p>Sub Category: {$item['sub_ctg_id']}</p>
                                   <p>Available Quantity: {$item['available_stock']}</p>
                                   <p>Size: {$item['size_option']}</p>
                                   <h6>Tk. {$item['product_price']}</h6>

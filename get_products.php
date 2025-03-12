@@ -6,7 +6,18 @@ header('Expires: 0'); // Proxies
 
 include 'database/dbConnection.php';
 
-$sql = "SELECT * FROM product_info";
+$sql = "
+    SELECT 
+        p.*, 
+        mc.main_ctg_name, 
+        sc.sub_ctg_name 
+    FROM 
+        product_info p
+    JOIN 
+        main_category mc ON p.main_ctg_id = mc.main_ctg_id
+    JOIN 
+        sub_category sc ON p.sub_ctg_id = sc.sub_ctg_id
+";
 $result = mysqli_query($conn, $sql);
 
 $products = array();

@@ -107,28 +107,23 @@ include 'cartBar.php';
             <br><br>
             <!-- Category Card -->
             <div class="grid-container">
-                <div class="card category-card">
-                    <!-- <img src="img/home2.jpg" class="card-img-top" alt="..."> -->
-                    <div class="card-body"><br>
-                        <h1>Men's Fashion</h1>
-                        <a href="category.php">
-                            <button class="btn">
-                                <h1><i class="ri-arrow-right-s-line"></i></h1>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="card category-card">
-                    <!-- <img src="img/home2.jpg" class="card-img-top" alt="..."> -->
-                    <div class="card-body"><br>
-                        <h1>women's Fashion</h1>
-                        <a href="category.php">
-                            <button class="btn">
-                                <h1><i class="ri-arrow-right-s-line"></i></h1>
-                            </button>
-                        </a>
-                    </div>
-                </div>
+            <?php 
+                $sql = "SELECT * FROM main_category";
+                $result = mysqli_query($conn, $sql);
+                
+                while ($category = mysqli_fetch_array($result)) {
+                    echo "<div class='card category-card'>
+                            <div class='card-body'><br>
+                                <h1>{$category['main_ctg_name']}</h1>
+                                <a href='category.php?main_ctg_id={$category['main_ctg_id']}'>
+                                    <button class='btn'>
+                                        <h1><i class='ri-arrow-right-s-line'></i></h1>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>";
+                }
+            ?>
             </div>
         </div>
     </section>
@@ -151,17 +146,20 @@ include 'cartBar.php';
             <div class="grid-container new-arrival-products">
                 <!-- All Product Card Will Add Here Dynamically -->
                 <?php
-                    $sql = "SELECT * FROM product_info";
+                    $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                            FROM product_info 
+                            JOIN main_category 
+                            ON product_info.main_ctg_id = main_category.main_ctg_id";
                     $result = mysqli_query($conn, $sql);
                     
                     $products = array();
                     while ($item = mysqli_fetch_array($result)) {
-                        echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1' onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>
-                        <img src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                        echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                        <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
                         <div class='card-body'>
-                            <h6>$item[product_title]</h6>
-                            <p>$item[sub_ctg_name]</p>
-                            <h6>Tk. $item[product_price]</h6>
+                            <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                            <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+                            <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
                             <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
                             <a href='product.php?pi=$item[product_id]'>
                                 <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
@@ -192,17 +190,20 @@ include 'cartBar.php';
             <div class="grid-container top-selling-products">
                 <!-- All Product Card Will Add Here Dynamically -->
                 <?php
-                    $sql = "SELECT * FROM product_info";
+                    $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                            FROM product_info 
+                            JOIN main_category 
+                            ON product_info.main_ctg_id = main_category.main_ctg_id";
                     $result = mysqli_query($conn, $sql);
                     
                     $products = array();
                     while ($item = mysqli_fetch_array($result)) {
-                        echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1' onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>
-                        <img src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                        echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                        <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
                         <div class='card-body'>
-                            <h6>$item[product_title]</h6>
-                            <p>$item[sub_ctg_name]</p>
-                            <h6>Tk. $item[product_price]</h6>
+                            <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                            <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+                            <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
                             <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
                             <a href='product.php?pi=$item[product_id]'>
                                 <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
@@ -235,17 +236,20 @@ include 'cartBar.php';
                 <div class="grid-container home-mens-fashion-products">
                     <!-- All Product Card Will Add Here Dynamically -->
                     <?php
-                        $sql = "SELECT * FROM product_info";
+                        $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                                FROM product_info 
+                                JOIN main_category 
+                                ON product_info.main_ctg_id = main_category.main_ctg_id";
                         $result = mysqli_query($conn, $sql);
                         
                         $products = array();
                         while ($item = mysqli_fetch_array($result)) {
-                            echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1' onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>
-                            <img src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                            echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                            <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
                             <div class='card-body'>
-                                <h6>$item[product_title]</h6>
-                                <p>$item[sub_ctg_name]</p>
-                                <h6>Tk. $item[product_price]</h6>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                                <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
                                 <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
                                 <a href='product.php?pi=$item[product_id]'>
                                     <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
@@ -276,17 +280,20 @@ include 'cartBar.php';
                 <div class="grid-container home-womens-fashion-products">
                     <!-- All Product Card Will Add Here Dynamically -->
                     <?php
-                        $sql = "SELECT * FROM product_info";
+                        $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                                FROM product_info 
+                                JOIN main_category 
+                                ON product_info.main_ctg_id = main_category.main_ctg_id";
                         $result = mysqli_query($conn, $sql);
                         
                         $products = array();
                         while ($item = mysqli_fetch_array($result)) {
-                            echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1' onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>
-                            <img src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                            echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                            <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
                             <div class='card-body'>
-                                <h6>$item[product_title]</h6>
-                                <p>$item[sub_ctg_name]</p>
-                                <h6>Tk. $item[product_price]</h6>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                                <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
                                 <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
                                 <a href='product.php?pi=$item[product_id]'>
                                     <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
@@ -339,3 +346,7 @@ $(document).ready(function () {
 
 </body>
 </html>
+<?php
+// Close the connection
+mysqli_close($conn);
+?>

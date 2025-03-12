@@ -42,8 +42,8 @@ function compressImage($source, $destination, $quality = 75) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_title = $_POST['product_title'];
     $product_price = $_POST['product_price'];
-    $product_main_ctg_name = $_POST['product_main_ctg_name'];
-    $product_sub_ctg_name = $_POST['product_sub_ctg_name'];
+    $product_main_ctg_id = $_POST['product_main_ctg'];
+    $product_sub_ctg_id = $_POST['product_sub_ctg'];
     $available_stock = $_POST['available_stock'];
     $size_option = "Default";
     $product_keyword = $_POST['product_keyword'];
@@ -85,10 +85,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($uploadSuccess) {
         // Prepare the SQL query
-        $query = "INSERT INTO product_info (product_title, product_price, main_ctg_name, sub_ctg_name, available_stock, size_option, product_keyword, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO product_info (product_title, product_price, main_ctg_id, sub_ctg_id, available_stock, size_option, product_keyword, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sdssisssssss", $product_title, $product_price, $product_main_ctg_name, $product_sub_ctg_name, $available_stock, $size_option, $product_keyword, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3]);
+        $stmt->bind_param("sdssisssssss", $product_title, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $size_option, $product_keyword, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3]);
 
         // Execute the query
         if ($stmt->execute()) {
@@ -189,14 +189,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Main Category -->
                         <div class="input-box">
                           <span class="details">Choose Main Category *</span>
-                          <select id="main_ctg_name" name="product_main_ctg_name" required>
+                          <select id="main_ctg_name" name="product_main_ctg" required>
                             <option value="">Select Main Category</option>
                             <?php
                               // Fetch main categories from the database
-                              $result = mysqli_query($conn, "SELECT main_ctg_name FROM main_category");
+                              $result = mysqli_query($conn, "SELECT main_ctg_id, main_ctg_name FROM main_category");
                               while ($row = mysqli_fetch_assoc($result)) {
                                 $category_name = htmlspecialchars($row['main_ctg_name'], ENT_QUOTES, 'UTF-8');
-                                  echo "<option value='$category_name'>$category_name</option>";
+                                $category_id = $row['main_ctg_id'];
+                                  echo "<option value='$category_id'>$category_name</option>";
                               }
                             ?>
                           </select>
@@ -204,14 +205,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Sub Category -->
                         <div class="input-box">
                           <span class="details">Choose Sub Category *</span>
-                          <select id="main_sub_name" name="product_sub_ctg_name" required>
+                          <select id="main_sub_name" name="product_sub_ctg" required>
                             <option value="">Select Sub Category</option>
                             <?php
                               // Fetch main categories from the database
-                              $result = mysqli_query($conn, "SELECT sub_ctg_name FROM sub_category");
+                              $result = mysqli_query($conn, "SELECT sub_ctg_id, sub_ctg_name FROM sub_category");
                               while ($row = mysqli_fetch_assoc($result)) {
                                 $category_name = htmlspecialchars($row['sub_ctg_name'], ENT_QUOTES, 'UTF-8');
-                                  echo "<option value='$category_name'>$category_name</option>";
+                                $category_id = $row['sub_ctg_id'];
+                                  echo "<option value='$category_id'>$category_name</option>";
                               }
                             ?>
                           </select>

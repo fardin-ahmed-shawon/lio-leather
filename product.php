@@ -33,7 +33,8 @@ include 'header.php';
 include 'cartBar.php';
 ?>
 
-<!-- const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+<!-- 
+                const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
                 const cartProduct = cartData.find(item => item.id === productId);
                 const quantity = cartProduct ? cartProduct.quantity : 1;
 
@@ -43,7 +44,8 @@ include 'cartBar.php';
                 product_details.setAttribute("product-title", `${product.title}`);
                 product_details.setAttribute("product-img", `${product.image}`);
                 product_details.setAttribute("product-price", `${product.price}`);
-                product_details.setAttribute("product-quantity", `${quantity}`); -->
+                product_details.setAttribute("product-quantity", `${quantity}`); 
+-->
 
 <!--==========================================-->
 <!--============ START PRODUCT AREA ==========-->
@@ -353,3 +355,7 @@ include 'bottomNavBar.php';
 
 </body>
 </html>
+<?php
+// Close the connection
+mysqli_close($conn);
+?>
