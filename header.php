@@ -101,12 +101,13 @@
                                 ?>
                                 <li>
                                     <div class="dropdown">
-                                        <button onclick="dropdownBtn(<?php echo $index; ?>)" class="dropdown-btn"><?php echo $mainCtgName; ?><i class="ri-arrow-down-s-line"></i></button>
+                                        <a href="category.php?main_ctg_id=<?php echo $mainCategory['main_ctg_id']; ?>">
+                                        <button onclick="dropdownBtn(<?php echo $index; ?>)" class="dropdown-btn"><?php echo $mainCtgName; ?><i class="ri-arrow-down-s-line"></i></button></a>
                                         <div class="content content<?php echo $index; ?>">
                                             <?php
                                             if ($subCategoriesResult->num_rows > 0) {
                                                 while ($subCategory = $subCategoriesResult->fetch_assoc()) {
-                                                    echo '<a href="#">' . $subCategory['sub_ctg_name'] . '</a>';
+                                                    echo '<a href="subCategory.php?sub_ctg_id=' . $subCategory['sub_ctg_id'] . '">' . $subCategory['sub_ctg_name'] . '</a>';
                                                 }
                                             } else {
                                                 echo '<a href="#">No Items Found!</a>';

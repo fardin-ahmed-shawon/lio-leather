@@ -37,17 +37,18 @@ include 'cartBar.php';
 ?>
 
 <?php 
-include 'database/dbConnection.php';
+    include 'database/dbConnection.php';
 
-$main_category_id = $_GET['main_ctg_id'];
+    $sub_category_id = $_GET['sub_ctg_id'];
 
-$sql = "SELECT * FROM main_category WHERE main_ctg_id='$main_category_id'";
-$result = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM sub_category WHERE sub_ctg_id='$sub_category_id'";
 
-while ($item = mysqli_fetch_array($result)) {
-    $main_category_name = $item['main_ctg_name'];
-    $main_category_des = $item['main_ctg_des'];
-}
+    $result = mysqli_query($conn, $sql);
+
+    while ($item = mysqli_fetch_array($result)) {
+        $sub_category_name = $item['sub_ctg_name'];
+        $main_category_name = $item['main_ctg_name'];
+    }
 ?>
 
 <!--==========================================-->
@@ -57,8 +58,8 @@ while ($item = mysqli_fetch_array($result)) {
     <!-- Category -->
     <section class="py-5">
         <div class="container">
-            <h1><?php echo $main_category_name ?></h1>
-            <p><?php echo $main_category_des ?></p>
+            <h1><?php echo $sub_category_name; ?></h1>
+            <p><?php echo $main_category_name; ?> / <?php echo $sub_category_name; ?></p>
             <br><br>
             <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="searchBar" placeholder="Search Product..." class="form-control py-3">
@@ -69,11 +70,12 @@ while ($item = mysqli_fetch_array($result)) {
             <div class="container grid-container py-5 mens-fashion-products">
                 <!-- Product Will Add Automatically -->             
                     <?php
-                        $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                        $sql = "SELECT product_info.*, main_category.main_ctg_name, sub_category.sub_ctg_id 
                                 FROM product_info 
-                                JOIN main_category 
-                                ON product_info.main_ctg_id = main_category.main_ctg_id
-                                WHERE product_info.main_ctg_id='$main_category_id'";
+                                JOIN main_category ON product_info.main_ctg_id = main_category.main_ctg_id 
+                                JOIN sub_category ON product_info.sub_ctg_id = sub_category.sub_ctg_id
+                                WHERE product_info.sub_ctg_id='$sub_category_id'";
+
                         $result = mysqli_query($conn, $sql);
                         
                         $products = array();

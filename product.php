@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
-<body onload="displayProductDetails()">
+<body>
 
 
 <?php
@@ -58,7 +58,12 @@ include 'cartBar.php';
                 $product_id = $_GET['pi'];
                 $quantity = 1;
 
-                $sql = "SELECT * FROM product_info WHERE product_id='$product_id'";
+                $sql = "SELECT p.*, mc.main_ctg_name, sc.sub_ctg_name 
+                        FROM product_info p
+                        JOIN main_category mc ON p.main_ctg_id = mc.main_ctg_id
+                        JOIN sub_category sc ON p.sub_ctg_id = sc.sub_ctg_id
+                        WHERE p.product_id='$product_id'";
+
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -79,10 +84,13 @@ include 'cartBar.php';
                             <div class='product-details'>
                                 <div>
                                     <h2 class='js-waypoint-sticky'>{$product['product_title']}</h2>
+                                    
+                                    <p>{$product['main_ctg_name']} / {$product['sub_ctg_name']}</p>
                                     <br>
                                     <p class='description'>{$product['product_description']}</p>
                                     <h3 class='price'>Tk. {$product['product_price']}</h3>
                                     <br>
+                                    <!--
                                     <h6>Select Size:</h6>
                                     <div class='product-size-container'>
                                         <div class='pt-2'>
@@ -106,6 +114,7 @@ include 'cartBar.php';
                                             <label for='xxl'>XXL</label>
                                         </div>
                                     </div>
+                                    -->
                                     <br>
                                     <div class='btn-and-counter'>
                                         <div class='counter'>
@@ -160,11 +169,34 @@ include 'bottomNavBar.php';
 
 <script>
     // Sticky Navbar
+    function myFunction() {
+    // Sticky Navbar
     $(document).ready(function () {
-        $(".js-waypoint-sticky").waypoint(function (t) {
-            "down" == t ? $("nav").addClass("sticky") : $("nav").removeClass("sticky");
+            $(".js-waypoint-sticky").waypoint(function (t) {
+                "down" == t ? $("nav").addClass("sticky") : $("nav").removeClass("sticky");
+            });
         });
-    });
+    }
+
+    function handleResize(event) {
+        if (event.matches) {
+            // The width matches the condition
+            myFunction();
+        } else {
+            console.log("Device width does not match the condition.");
+        }
+    }
+
+    // Define the device width condition
+    const mediaQuery = window.matchMedia("(max-width: 1150px)"); // Example: max-width of 768px
+
+    // Add an event listener to monitor changes in width
+    mediaQuery.addEventListener("change", handleResize);
+
+    // Run the function on initial load if the condition matches
+    if (mediaQuery.matches) {
+    myFunction();
+    }
     
     // Increment and Decrement product quantity
     function plus() {
@@ -203,152 +235,6 @@ include 'bottomNavBar.php';
         }
     }
     
-
-    // function displayProductDetails() {
-    //     const productId = localStorage.getItem('selectedProductId');
-    //     if (!productId) return;
-
-    //     fetch('get_products.php')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             const product = data.find(item => item.id === productId);
-    //             if (!product) return;
-
-    //             const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
-    //             const cartProduct = cartData.find(item => item.id === productId);
-    //             const quantity = cartProduct ? cartProduct.quantity : 1;
-
-    //             const product_details = document.querySelector(".product-container");
-    //             product_details.setAttribute("product-id", `${product.id}`);
-    //             product_details.setAttribute("product-title", `${product.title}`);
-    //             product_details.setAttribute("product-img", `${product.image}`);
-    //             product_details.setAttribute("product-price", `${product.price}`);
-    //             product_details.setAttribute("product-quantity", `${quantity}`);
-
-    //             // If last 3 image is not found
-    //             if (product.image2 == "img\/" && product.image3 == "img\/" && product.image4 == "img\/") {
-    //                 product_details.innerHTML = `
-    //                 <div class="product-images">
-    //                     <div class="img-thumb">
-    //                         <img id="main-image" src="${product.image}" alt="Product Image">
-                            
-    //                     </div>
-    //                 </div>
-    //                 <div class="product-details">
-    //                     <div>
-    //                         <h2 class="js-waypoint-sticky">${product.title}</h2>
-    //                         <br>
-    //                         <p class="description">${product.description}</p>
-    //                         <h3 class="price">Tk. ${product.price}</h3>
-    //                         <br>
-    //                             <h6>Select Size:</h6>
-    //                             <div class="product-size-container">
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="s" name="size" value="S">
-    //                                     <label for="s">S</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="m" name="size" value="M">
-    //                                     <label for="m">M</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="l" name="size" value="L">
-    //                                     <label for="l">L</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="xl" name="size" value="XL">
-    //                                     <label for="xl">XL</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="xxl" name="size" value="XXL">
-    //                                     <label for="xxl">XXL</label>
-    //                                 </div>
-    //                             </div>
-    //                             <br>
-    //                             <div class="btn-and-counter">
-    //                                 <div class="counter">
-    //                                     <button onclick="minus()" class="minus">-</button>
-    //                                     <span class="num">${quantity}</span>
-    //                                     <button onclick="plus()" class="plus">+</button>
-    //                                 </div>
-    //                                 <button onclick="addProductToCart(this)" class="btn btn-danger add-cart">
-    //                                     <span>Add to Cart</span> <i class="ri-shopping-bag-line"></i>
-    //                                 </button>
-    //                             </div>
-    //                             <button onclick="window.location.href='viewCart.php';" class="btn btn-dark buy-now">
-    //                                 <span>View Cart</span> <i class="ri-shopping-cart-2-line"></i>
-    //                             </button>
-    //                     </div>
-    //                 </div>
-    //             `;
-    //             } else {
-    //                 product_details.innerHTML = `
-    //                 <div class="product-images">
-    //                     <div class="img-thumb">
-    //                         <img id="main-image" src="${product.image}" alt="Product Image">
-    //                         <div class="img-small">
-    //                             <img src="${product.image}" alt="Thumbnail 1" onclick="changeImage('${product.image}')">
-    //                             <img src="${product.image2}" alt="Thumbnail 2" onclick="changeImage('${product.image2}')">
-    //                             <img src="${product.image3}" alt="Thumbnail 3" onclick="changeImage('${product.image3}')">
-    //                             <img src="${product.image4}" alt="Thumbnail 4" onclick="changeImage('${product.image4}')">
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //                 <div class="product-details">
-    //                     <div>
-    //                         <h2 class="js-waypoint-sticky">${product.title}</h2>
-    //                         <br>
-    //                         <p class="description">${product.description}</p>
-    //                         <h3 class="price">Tk. ${product.price}</h3>
-    //                         <br>
-    //                             <h6>Select Size:</h6>
-    //                             <div class="product-size-container">
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="s" name="size" value="S">
-    //                                     <label for="s">S</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="m" name="size" value="M">
-    //                                     <label for="m">M</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="l" name="size" value="L">
-    //                                     <label for="l">L</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="xl" name="size" value="XL">
-    //                                     <label for="xl">XL</label>
-    //                                 </div>
-    //                                 <div class="pt-2">
-    //                                     <input type="radio" id="xxl" name="size" value="XXL">
-    //                                     <label for="xxl">XXL</label>
-    //                                 </div>
-    //                             </div>
-    //                             <br>
-    //                             <div class="btn-and-counter">
-    //                                 <div class="counter">
-    //                                     <button onclick="minus()" class="minus">-</button>
-    //                                     <span class="num">${quantity}</span>
-    //                                     <button onclick="plus()" class="plus">+</button>
-    //                                 </div>
-    //                                 <button onclick="addProductToCart(this)" class="btn btn-danger add-cart">
-    //                                     <span>Add to Cart</span> <i class="ri-shopping-bag-line"></i>
-    //                                 </button>
-    //                             </div>
-    //                             <button onclick="window.location.href='viewCart.php';" class="btn btn-dark buy-now">
-    //                                 <span>View Cart</span> <i class="ri-shopping-cart-2-line"></i>
-    //                             </button>
-    //                     </div>
-    //                 </div>
-    //             `;
-    //             }
-
-    //         })
-    //         .catch(error => console.error('Error fetching product details:', error));
-    // }
-
-    // window.onload = displayProductDetails;
-
     // localStorage.clear();
 
 </script>
