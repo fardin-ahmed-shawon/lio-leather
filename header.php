@@ -98,23 +98,27 @@
                                 $subCategoriesStmt->bind_param("s", $mainCtgName);
                                 $subCategoriesStmt->execute();
                                 $subCategoriesResult = $subCategoriesStmt->get_result();
-                                ?>
-                                <li>
-                                    <div class="dropdown">
-                                        <a href="category.php?main_ctg_id=<?php echo $mainCategory['main_ctg_id']; ?>">
-                                        <button onclick="dropdownBtn(<?php echo $index; ?>)" class="dropdown-btn"><?php echo $mainCtgName; ?><i class="ri-arrow-down-s-line"></i></button></a>
-                                        <div class="content content<?php echo $index; ?>">
-                                            <?php
-                                            if ($subCategoriesResult->num_rows > 0) {
-                                                while ($subCategory = $subCategoriesResult->fetch_assoc()) {
-                                                    echo '<a href="subCategory.php?sub_ctg_id=' . $subCategory['sub_ctg_id'] . '">' . $subCategory['sub_ctg_name'] . '</a>';
-                                                }
-                                            }
-                                            ?>
+                                if ($subCategoriesResult->num_rows <= 0) {
+                                    ?>
+                                        <li><a href="category.php?main_ctg_id=<?php echo $mainCategory['main_ctg_id']; ?>"><?php echo $mainCtgName; ?></a></li>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <li>
+                                        <div class="dropdown">
+                                            <a href="category.php?main_ctg_id=<?php echo $mainCategory['main_ctg_id']; ?>">
+                                            <button onclick="dropdownBtn(<?php echo $index; ?>)" class="dropdown-btn"><?php echo $mainCtgName; ?><i class="ri-arrow-down-s-line"></i></button></a>
+                                            <div class="content content<?php echo $index; ?>">
+                                                <?php
+                                                    while ($subCategory = $subCategoriesResult->fetch_assoc()) {
+                                                        echo '<a href="subCategory.php?sub_ctg_id=' . $subCategory['sub_ctg_id'] . '">' . $subCategory['sub_ctg_name'] . '</a>';
+                                                    }
+                                                ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 <?php
+                                }
                                 $subCategoriesStmt->close();
                             }
                         }
