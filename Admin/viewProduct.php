@@ -50,9 +50,9 @@ if (!isset($_SESSION['admin'])) {
             </div>
             <div class="row">
               <h1>Product List</h1>
-              <form class="form-group" action="#">
+              <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="search" placeholder="Search Product" class="form-control">
-              </form>
+              </form> -->
               <div class="container grid-container products">
                 <!-- All Product Card Will Add Here Dynamically -->
                 <?php
@@ -74,8 +74,10 @@ if (!isset($_SESSION['admin'])) {
                                   <p>Available Quantity: {$item['available_stock']}</p>
                                   <p>Size: {$item['size_option']}</p>
                                   <h6>Tk. {$item['product_price']}</h6>
+                                  <!--
                                   <button class='btn btn-dark'><span>Edit</span> <span class='mdi mdi-square-edit-outline'></span></button>
                                   <button class='btn btn-dark'><span>Delete</span> <span class='mdi mdi-trash-can-outline'></span></button>
+                                  -->
                                   </div>
                               </div>";            
                           }
