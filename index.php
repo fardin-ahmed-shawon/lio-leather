@@ -332,6 +332,7 @@ include 'bottomNavBar.php';
 
 <!-- Main JS -->
 <script src="js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/cartCalculation.js"></script>
 <script src="js/search.js"></script>
 
@@ -342,6 +343,12 @@ $(document).ready(function () {
         "down" == t ? $("nav").addClass("sticky") : $("nav").removeClass("sticky");
     });
 });
+// Cart Added Alert
+// Swal.fire({
+//             title: "Cart Added Successful!",
+//             icon: "success",
+//             draggable: true
+//         });
 </script>
 
 </body>
