@@ -34,11 +34,11 @@ session_start();
     <form action="#" method="post">
       <h3>Admin Login</h3>
 
-      <br>
+      <!-- <br>
       <div class="credentials">
         <p>username: admin_39_</p>
         <p>password: 54321</p>
-      </div>
+      </div> -->
 
       <br><br>
       <h3 class="msg-box"></h3>

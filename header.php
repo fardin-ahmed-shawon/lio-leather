@@ -13,7 +13,7 @@
             </div>
 
             <div class="logo">
-            <a href="index.php"><span>Logo.</span></a>
+            <a href="index.php"><span>Lioo.</span></a>
             </div>
 
             <div class="search-area">
@@ -109,8 +109,6 @@
                                                 while ($subCategory = $subCategoriesResult->fetch_assoc()) {
                                                     echo '<a href="subCategory.php?sub_ctg_id=' . $subCategory['sub_ctg_id'] . '">' . $subCategory['sub_ctg_name'] . '</a>';
                                                 }
-                                            } else {
-                                                echo '<a href="#">No Items Found!</a>';
                                             }
                                             ?>
                                         </div>

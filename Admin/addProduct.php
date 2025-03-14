@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- Sub Category -->
                         <div class="input-box">
                           <span class="details">Choose Sub Category *</span>
-                          <select id="main_sub_name" name="product_sub_ctg" required>
+                          <select id="main_sub_name" name="product_sub_ctg">
                             <option value="">Select Sub Category</option>
                             <?php
                               // Fetch main categories from the database

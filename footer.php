@@ -5,13 +5,13 @@
     <div class="container footer-grid-container">
         <div class="business">
             <div class="logo">
-                <a href="index.php"><span>Logo.</span></a>
+                <a href="index.php"><span>Lioo.</span></a>
             </div>
             <br>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed id natus laboriosam autem nam magni corporis, itaque fuga deserunt provident.</p>
             <br>
             <p><i class="ri-mail-line"></i> <span>contact@example.com</span></p>
-            <p><i class="ri-phone-line"></i> <span>+8801944667441</span></p>
+            <p><i class="ri-phone-line"></i> <span>+8801XXXXXXXX</span></p>
             <p><i class="ri-map-pin-line"></i> <span>Dhanmondi, Dhaka, Bangladesh</span></p>
             <br>
             <div class="social-links">
@@ -29,7 +29,7 @@
                 </a>
             </div>
             <br>
-            <p class="copyright">© 2025 Easy Tech Solutions. All rights reserved.</p>
+            <p class="copyright">© 2025 Lioo. All rights reserved.</p>
         </div>
         <div class="about">
             <h6>about</h6>
@@ -57,7 +57,7 @@
                     <button type="submit" class="btn btn-danger">Subscribe</button>
             </form>
             <br><br><br>
-            <p class="copyright">© 2025 Easy Tech Solutions. All rights reserved.</p>
+            <p class="copyright">© 2025 Lioo. All rights reserved.</p>
         </div>
     </div>
 </footer>

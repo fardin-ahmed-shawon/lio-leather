@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database_name = "easy_commerce";
+$database_name = "liooxzpx_lioo_leather";
 
 $conn = mysqli_connect($servername, $username, $password, $database_name);
 

@@ -220,13 +220,13 @@ include 'cartBar.php';
     <!--============= All Category List & Items =============-->
     <div class="all-categories">
         
-        <!-- Men's Fashion -->
-        <section class="py-5">
+        <!-- Category 1 -->
+        <!-- <section class="py-5">
             <div class="container">
                 <div class="grid-container-2x">
                     <div class="title-align-left">
-                        <h1>Men's Fashion</h1>
-                        <p>Explore all the men's product</p>
+                        <h1>Category 1</h1>
+                        <p>Explore all the category 1 products</p>
                     </div>
                     <div class="btn-align-end">
                         <button onclick="window.location.href='category.php';" class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
@@ -234,7 +234,6 @@ include 'cartBar.php';
                 </div>
                 <br><hr><br>
                 <div class="grid-container home-mens-fashion-products">
-                    <!-- All Product Card Will Add Here Dynamically -->
                     <?php
                         $sql = "SELECT product_info.*, main_category.main_ctg_name 
                                 FROM product_info 
@@ -260,15 +259,15 @@ include 'cartBar.php';
                     ?>
                 </div>
             </div>
-        </section>
+        </section> -->
 
-        <!-- Women's Fashion -->
-        <section class="py-5 bg-gray">
+        <!-- Category 2 -->
+        <!-- <section class="py-5 bg-gray">
             <div class="container">
                 <div class="grid-container-2x">
                     <div class="title-align-left">
-                        <h1>Women's Fashion</h1>
-                        <p>Explore all the women's product</p>
+                        <h1>Category 2</h1>
+                        <p>Explore all the category 2 products</p>
                     </div>
                     <div class="btn-align-end">
                         <a href="#">
@@ -278,7 +277,6 @@ include 'cartBar.php';
                 </div>
                 <br><hr><br>
                 <div class="grid-container home-womens-fashion-products">
-                    <!-- All Product Card Will Add Here Dynamically -->
                     <?php
                         $sql = "SELECT product_info.*, main_category.main_ctg_name 
                                 FROM product_info 
@@ -304,7 +302,7 @@ include 'cartBar.php';
                     ?>
                 </div>
             </div>
-        </section>
+        </section> -->
             
     </div>  
 </div>
