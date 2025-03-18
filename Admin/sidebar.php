@@ -60,12 +60,12 @@
               </div>
             </li>
 
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" href="slider.php">
                 <span class="menu-title">Slider</span>
                 <i class="mdi mdi-menu-close menu-icon"></i>
               </a>
-            </li> -->
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="viewCustomers.php">

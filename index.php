@@ -174,7 +174,26 @@ include 'cartBar.php';
     <div class="img-carousel-area">
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-              <div class="carousel-item active">
+              <?php 
+                $query = "SELECT slider_id, slider_img FROM slider";
+                $result = mysqli_query($conn, $query);
+                if (mysqli_num_rows($result) > 0) {
+                    $count = 1;
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        if ($count == 1) {
+                            echo '<div class="carousel-item active">';
+                            echo '<img src="img/'.htmlspecialchars($row['slider_img']).'" class="d-block w-100" alt="...">';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="carousel-item">';
+                            echo '<img src="img/'.htmlspecialchars($row['slider_img']).'" class="d-block w-100" alt="...">';
+                            echo '</div>';
+                        }
+                        $count++;
+                    }
+                }
+              ?>  
+              <!-- <div class="carousel-item active">
                 <img src="img/1.jpg" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
@@ -182,7 +201,7 @@ include 'cartBar.php';
               </div>
               <div class="carousel-item">
                 <img src="img/3.jpg" class="d-block w-100" alt="...">
-              </div>
+              </div> -->
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
