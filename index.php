@@ -381,7 +381,7 @@ include 'cartBar.php';
                     <p>Explore all the new product</p>
                 </div>
                 <div class="btn-align-end">
-                    <a href="category.php">
+                    <a href="">
                         <button class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
                     </a>
                 </div>
@@ -425,7 +425,7 @@ include 'cartBar.php';
                     <p>Explore all the top selling product</p>
                 </div>
                 <div class="btn-align-end">
-                    <a href="category.php">
+                    <a href="">
                         <button class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
                     </a>
                 </div>
@@ -479,27 +479,27 @@ include 'cartBar.php';
                 <br><hr><br>
                 <div class="grid-container home-mens-fashion-products">
                     <?php
-                        $sql = "SELECT product_info.*, main_category.main_ctg_name 
-                                FROM product_info 
-                                JOIN main_category 
-                                ON product_info.main_ctg_id = main_category.main_ctg_id";
-                        $result = mysqli_query($conn, $sql);
+                        // $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                        //         FROM product_info 
+                        //         JOIN main_category 
+                        //         ON product_info.main_ctg_id = main_category.main_ctg_id";
+                        // $result = mysqli_query($conn, $sql);
                         
-                        $products = array();
-                        while ($item = mysqli_fetch_array($result)) {
-                            echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
-                            <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
-                            <div class='card-body'>
-                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
-                                <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
-                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
-                                <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
-                                <a href='product.php?pi=$item[product_id]'>
-                                    <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
-                                </a>
-                            </div>
-                        </div>";
-                        }
+                        // $products = array();
+                        // while ($item = mysqli_fetch_array($result)) {
+                        //     echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                        //     <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                        //     <div class='card-body'>
+                        //         <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                        //         <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+                        //         <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
+                        //         <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
+                        //         <a href='product.php?pi=$item[product_id]'>
+                        //             <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
+                        //         </a>
+                        //     </div>
+                        // </div>";
+                        // }
                     ?>
                 </div>
             </div>
