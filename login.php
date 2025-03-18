@@ -197,10 +197,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['phone'] = $user['user_phone'];
             $_SESSION['email'] = $user['user_email'];
             // header("Location: profile.php");
-            ?>
-            <meta http-equiv="refresh" content="0;url=profile.php">
-            <?php
-            exit();
+            if (isset($_GET['rd'])) {
+                ?>
+                <meta http-equiv="refresh" content="0;url=checkout.php">
+                <?php
+                exit();
+            } else {
+                ?>
+                <meta http-equiv="refresh" content="0;url=profile.php">
+                <?php
+                exit();
+            }
         } else {
             echo "<script>printErrorMsg();</script>";
         }

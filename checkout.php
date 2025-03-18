@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 session_start();
 if (!isset($_SESSION['phone'])) {
-    header("Location: login.php");
+    header("Location: login.php?rd='checkout'");
     exit();
 }
 // database connection
