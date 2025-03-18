@@ -106,8 +106,9 @@
                                     ?>
                                     <li>
                                         <div class="dropdown">
-                                            <a href="category.php?main_ctg_id=<?php echo $mainCategory['main_ctg_id']; ?>">
-                                            <button onclick="dropdownBtn(<?php echo $index; ?>)" class="dropdown-btn"><?php echo $mainCtgName; ?><i class="ri-arrow-down-s-line"></i></button></a>
+                                            
+                                            <button onclick="dropdownBtn(<?php echo $index; ?>)" class="dropdown-btn"><?php echo $mainCtgName; ?><i class="ri-arrow-down-s-line"></i></button>
+                                        
                                             <div class="content content<?php echo $index; ?>">
                                                 <?php
                                                     while ($subCategory = $subCategoriesResult->fetch_assoc()) {

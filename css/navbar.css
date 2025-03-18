@@ -101,7 +101,7 @@ nav .inner {
 /* Start Search Area */
 .search-area {
     margin: 0 15px;
-    border-radius: 5px;
+    border-radius: 25px;
     border: 1px solid var(--black);
 }
 

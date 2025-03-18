@@ -7,47 +7,97 @@ if (!isset($_SESSION['admin'])) {
 
 include('database/dbConnection.php'); // Include database connection file
 
+// Image Compression Function
+function compressImage($source, $destination, $quality = 75) {
+    $imgInfo = getimagesize($source);
+    if (!$imgInfo) return false;
+
+    $mime = $imgInfo['mime'];
+    switch ($mime) {
+        case 'image/jpeg': $image = imagecreatefromjpeg($source); break;
+        case 'image/png': $image = imagecreatefrompng($source); break;
+        case 'image/webp': $image = imagecreatefromwebp($source); break;
+        default: return false;
+    }
+
+    // Resize Image to 800x800 (Square Shape)
+    $newWidth = 800;
+    $newHeight = 800;
+    $newImage = imagecreatetruecolor($newWidth, $newHeight);
+    imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($image), imagesy($image));
+    $image = $newImage;
+
+    // Save Compressed Image
+    switch ($mime) {
+        case 'image/jpeg': imagejpeg($image, $destination, $quality); break;
+        case 'image/png': imagepng($image, $destination, round($quality / 10)); break;
+        case 'image/webp': imagewebp($image, $destination, $quality); break;
+    }
+    imagedestroy($image);
+    return true;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['insert_main_category'])) {
         $main_ctg_name = $_POST['main_ctg_name'];
         $main_ctg_des = $_POST['main_ctg_des'];
-        $main_ctg_img = $_POST['main_ctg_img'];
 
-        $stmt = $conn->prepare("INSERT INTO main_category (main_ctg_name, main_ctg_des, main_ctg_img) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $main_ctg_name, $main_ctg_des, $main_ctg_img);
+        // Handle Image Upload and Compression
+        $uploadSuccess = false;
+        $compressedImagePath = null;
 
-        if ($stmt->execute()) {
-          $category_added_status = "Main Category Added Successfully!";
-        } else {
-            echo "Error: " . $stmt->error;
+        if (!empty($_FILES['main_ctg_img']['name'])) {
+            $originalPath = '../img/' . basename($_FILES['main_ctg_img']['name']);
+            $compressedPath = '../img/compressed_' . basename($_FILES['main_ctg_img']['name']);
+
+            if (move_uploaded_file($_FILES['main_ctg_img']['tmp_name'], $originalPath)) {
+                if (compressImage($originalPath, $compressedPath, 60)) {
+                    $compressedImagePath = $compressedPath;
+                    unlink($originalPath); // Delete the original image
+                    $uploadSuccess = true;
+                }
+            }
         }
-        $stmt->close();
+
+        if ($uploadSuccess) {
+            // Insert into Database
+            $stmt = $conn->prepare("INSERT INTO main_category (main_ctg_name, main_ctg_des, main_ctg_img) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $main_ctg_name, $main_ctg_des, $compressedImagePath);
+
+            if ($stmt->execute()) {
+                $category_added_status = "Main Category Added Successfully!";
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+            $stmt->close();
+        } else {
+            echo "Failed to upload or compress the image.";
+        }
     }
 
     if (isset($_POST['insert_sub_category'])) {
-      $sub_CTG_name = $_POST['sub_ctg_name'];
-      $main_CTG_name = $_POST['main_CTG_name'];
-  
-      // Validate input
-      if (empty($main_CTG_name) || empty($sub_CTG_name)) {
-          echo "Both main category and subcategory names are required.";
-      } else {
-          // Prepare and bind
-          $stmt = $conn->prepare("INSERT INTO sub_category (sub_ctg_name, main_ctg_name) VALUES (?, ?)");
-          $stmt->bind_param("ss", $sub_CTG_name, $main_CTG_name);
-  
-          // Execute the statement
-          if ($stmt->execute()) {
-            $category_added_status = "Sub Category Added Successfully!";
-          } else {
-              echo "Error: " . $stmt->error;
-          }
-  
-          // Close the statement
-          $stmt->close();
-      }
-  }
+        $sub_CTG_name = $_POST['sub_ctg_name'];
+        $main_CTG_name = $_POST['main_CTG_name'];
 
+        // Validate input
+        if (empty($main_CTG_name) || empty($sub_CTG_name)) {
+            echo "Both main category and subcategory names are required.";
+        } else {
+            // Prepare and bind
+            $stmt = $conn->prepare("INSERT INTO sub_category (sub_ctg_name, main_ctg_name) VALUES (?, ?)");
+            $stmt->bind_param("ss", $sub_CTG_name, $main_CTG_name);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                $category_added_status = "Sub Category Added Successfully!";
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+
+            // Close the statement
+            $stmt->close();
+        }
+    }
 }
 ?>
 
@@ -116,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <h1 class="text-center">Add Main Category</h1>
                 <div class="content">
                     <!-- Main Category Add form -->
-                    <form action="#" method="post">
+                    <form action="#" method="post" enctype="multipart/form-data">
                       <div class="user-details full-input-box">
                         <!-- title -->
                         <div class="input-box">
