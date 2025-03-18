@@ -229,10 +229,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <input name="product_keyword" type="text" placeholder="Enter your product keyword" required>
                         </div>
                         <!-- Description -->
-                        <div class="input-box">
-                          <span class="details">Description *</span>
-                          <input name="product_description" type="text" placeholder="Enter your product description" required>
+
+                        <!--  Script For Text Editor -->
+                        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+                        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+                        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+                        <div class="form-group m-auto"> 
+                          <span class="details">Product Description *</span>
+                          <textarea id="summernote" rows="4" name="product_description" cols="58" class="mytextarea"> </textarea>
                         </div>
+                        <br><br>
+
+                          <script>
+                            $('#summernote').summernote({
+                              placeholder: 'Design your website',
+                              tabsize: 2,
+                              height: 200
+                            });
+                            
+                          </script>
+
+
                         <!-- Size -->
                         <!-- <span class="details">Product Available Size</span>
                         <div class="input-checkbox">
@@ -267,28 +285,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                           </div>
                         </div> -->
+
                         <!-- main image -->
                         <div>
                           <span class="details">Attach Primary Image *</span>
-                          <h4>(800 X 800)</h4>
+                          <h4>(1000 X 1000)</h4>
                           <input type="file" name="product_img1" id="file" class="inputfile" required/><br>
                         </div>
                         <!-- image 2 -->
                         <div>
                           <span class="details">Attach Image 2</span>
-                          <h4>(800 X 800)</h4>
+                          <h4>(1000 X 1000)</h4>
                           <input type="file" name="product_img2" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 3 -->
                         <div>
                           <span class="details">Attach Image 3</span>
-                          <h4>(800 X 800)</h4>
+                          <h4>(1000 X 1000)</h4>
                           <input type="file" name="product_img3" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 4 -->
                         <div>
                           <span class="details">Attach Image 4</span>
-                          <h4>(800 X 800)</h4>
+                          <h4>(1000 X 1000)</h4>
                           <input type="file" name="product_img4" id="file" class="inputfile"/><br>
                         </div>
                       </div>

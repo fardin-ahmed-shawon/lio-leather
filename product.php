@@ -21,7 +21,11 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <style>
+        .product-details ul li {
+            list-style: disc;
+        }
+    </style>
 </head>
 <body>
 
@@ -72,14 +76,26 @@ include 'cartBar.php';
                         <div class='product-container' product-id='$product[product_id]' product-title='$product[product_title]' product-img='Admin/$product[product_img1]' product-price='$product[product_price]' product-quantity='$quantity'>
                             <div class='product-images'>
                                 <div class='img-thumb'>
-                                    <img id='main-image' src='img/{$product['product_img1']}' alt='Product Image'>
+                                    <img id='main-image' src='img/{$product['product_img1']}' alt='Product Image'>";
+                                    ?>
                                     <div class='img-small'>
-                                        <img src='img/{$product['product_img1']}' alt='Thumbnail 1' onclick='changeImage(\"img/{$product['product_img1']}\")'>
-                                        <img src='img/{$product['product_img2']}' alt='Thumbnail 2' onclick='changeImage(\"img/{$product['product_img2']}\")'>
-                                        <img src='img/{$product['product_img3']}' alt='Thumbnail 3' onclick='changeImage(\"img/{$product['product_img3']}\")'>
-                                        <img src='img/{$product['product_img4']}' alt='Thumbnail 4' onclick='changeImage(\"img/{$product['product_img4']}\")'>
+                                        <?php
+                                        if (!empty($product['product_img1'])) {
+                                            echo "<img src='img/{$product['product_img1']}' alt='Thumbnail 1' onclick='changeImage(\"img/{$product['product_img1']}\")'>";
+                                        }
+                                        if (!empty($product['product_img2'])) {
+                                            echo "<img src='img/{$product['product_img2']}' alt='Thumbnail 2' onclick='changeImage(\"img/{$product['product_img2']}\")'>";
+                                        }
+                                        if (!empty($product['product_img3'])) {
+                                            echo "<img src='img/{$product['product_img3']}' alt='Thumbnail 3' onclick='changeImage(\"img/{$product['product_img3']}\")'>";
+                                        }
+                                        if (!empty($product['product_img4'])) {
+                                            echo "<img src='img/{$product['product_img4']}' alt='Thumbnail 4' onclick='changeImage(\"img/{$product['product_img4']}\")'>";
+                                        }
+                                        ?>
                                     </div>
-                                </div>
+                                    <?php
+                                echo " </div>
                             </div>
                             <div class='product-details'>
                                 <div>
@@ -90,31 +106,6 @@ include 'cartBar.php';
                                     <p class='description'>{$product['product_description']}</p>
                                     <h3 class='price'>Tk. {$product['product_price']}</h3>
                                     <br>
-                                    <!--
-                                    <h6>Select Size:</h6>
-                                    <div class='product-size-container'>
-                                        <div class='pt-2'>
-                                            <input type='radio' id='s' name='size' value='S'>
-                                            <label for='s'>S</label>
-                                        </div>
-                                        <div class='pt-2'>
-                                            <input type='radio' id='m' name='size' value='M'>
-                                            <label for='m'>M</label>
-                                        </div>
-                                        <div class='pt-2'>
-                                            <input type='radio' id='l' name='size' value='L'>
-                                            <label for='l'>L</label>
-                                        </div>
-                                        <div class='pt-2'>
-                                            <input type='radio' id='xl' name='size' value='XL'>
-                                            <label for='xl'>XL</label>
-                                        </div>
-                                        <div class='pt-2'>
-                                            <input type='radio' id='xxl' name='size' value='XXL'>
-                                            <label for='xxl'>XXL</label>
-                                        </div>
-                                    </div>
-                                    -->
                                     <br>
                                     <div class='btn-and-counter'>
                                         <div class='counter'>
