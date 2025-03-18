@@ -26,6 +26,15 @@ include 'database/dbConnection.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
+        #success-box {
+            margin: auto;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 500;
+            padding: 20px;
+            color: #0A3622;
+            background: #D1E7DD;
+        }
         .card {
             cursor: pointer;
         }
@@ -159,6 +168,12 @@ include 'database/dbConnection.php';
 <body>
 
 <?php
+    if (isset($_GET['or_msg'])) {
+        echo '<div id="success-box">Order Successfully Placed</div>';
+    }
+?>
+
+<?php
 // header file
 include 'header.php';
 // cart bar
@@ -193,15 +208,6 @@ include 'cartBar.php';
                     }
                 }
               ?>  
-              <!-- <div class="carousel-item active">
-                <img src="img/1.jpg" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="img/2.jpg" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="img/3.jpg" class="d-block w-100" alt="...">
-              </div> -->
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>

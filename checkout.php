@@ -90,27 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $stmt->close();
         }
-
         $conn->close();
-        echo "Order Placed Successfully";
-        ?>
-        <META HTTP-EQUIV="Refresh" CONTENT="0; URL=index.php">
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                let success_msg = document.getElementById("success-msg");
-                if (success_msg) {
-                    success_msg.style.display = "block";
-                    success_msg.innerText = "Order Placed Successfully!";
-                    setTimeout(() => {
-                        success_msg.style.display = "none";
-                        window.location.href = "index.php";
-                        // Clear the product list after placing the order
-                        localStorage.clear();
-                    }, 2000);
-                }
-            });
-        </script>
-        <?php
     }
 }
 ?>
@@ -710,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             document.body.innerHTML = data;
             localStorage.clear();
-            window.location.href = "index.php";
+            window.location.href = "index.php?or_msg='successful'";
         })
         .catch(error => console.error('Error:', error));
     });
