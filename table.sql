@@ -101,3 +101,15 @@ CREATE TABLE purchase_history (
     FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product_info(product_id) ON DELETE CASCADE
 );
+
+CREATE TABLE review_table (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    user_id INT NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    user_rating INT NOT NULL CHECK (user_rating BETWEEN 1 AND 5),
+    user_review TEXT NOT NULL,
+    datetime INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product_info(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE
+);

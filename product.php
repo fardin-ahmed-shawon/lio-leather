@@ -25,6 +25,15 @@
         .product-details ul li {
             list-style: disc;
         }
+        #review_content .reviewer-dp {
+            width: 50px;
+            height: 50px;
+            background-color: #f1f1f1;
+            border-radius: 50%;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            /* margin-left: 50px; */
+        }
     </style>
 </head>
 <body>
@@ -132,6 +141,13 @@ include 'cartBar.php';
 <!--========================================-->
 <!--============ END PRODUCT AREA ==========-->
 <!--========================================-->
+
+<!--==========================================-->
+<!-- Rating and Review Section -->
+<!--==========================================-->
+
+<?php include 'ratings.php'; ?>
+<!--==========================================-->
 
 
 <?php
