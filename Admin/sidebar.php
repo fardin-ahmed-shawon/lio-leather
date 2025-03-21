@@ -105,12 +105,12 @@
               </a>
             </li>
             
-            <!-- <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" href="purchaseHistory.php">
                 <span class="menu-title">Purchase History</span>
                 <i class="mdi mdi-history menu-icon"></i>
               </a>
-            </li> -->
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="logout.php">

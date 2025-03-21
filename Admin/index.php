@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accept_order'])) {
                     <h1 class="mb-5">
                       <?php
                       // Fetch total active orders from order_info table
-                      $sql = "SELECT COUNT(order_no) AS total_orders FROM order_info";
+                      $sql = "SELECT COUNT(order_no) AS total_orders FROM order_info WHERE order_visibility='Show'";
                       $result = $conn->query($sql);
                       $row = $result->fetch_assoc();
                       echo $row['total_orders'];
@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accept_order'])) {
                     </tr>
                     <?php
                     // Fetch data from order_info table
-                    $sql = "SELECT order_no, user_id, user_phone, invoice_no, product_id, product_quantity, product_size, total_price, payment_method, order_date, order_status FROM order_info WHERE order_status = 'Pending'";
+                    $sql = "SELECT order_no, user_id, user_phone, invoice_no, product_id, product_quantity, product_size, total_price, payment_method, order_date, order_status, order_visibility FROM order_info WHERE order_status = 'Pending' AND order_visibility = 'Show' ORDER BY order_no DESC LIMIT 10";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
@@ -191,8 +191,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accept_order'])) {
                                     </form>
                                 </td>
                                 <td>
-                                    <a href='deleteOrder.php?o_n={$row['order_no']}'>
-                                        <button class='btn btn-danger' onclick='return checkDelete()'>Delete</button>
+                                    <a href='removeOrder.php?o_n={$row['order_no']}'>
+                                        <button class='btn btn-danger' onclick='return checkDelete()'>Declined
+</button>
                                     </a>
                                 </td>
                             </tr>";
@@ -226,6 +227,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accept_order'])) {
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/misc.js"></script>
+
+    <script>
+      function checkDelete() {
+        return confirm('Are you sure you want to declined this order?');
+      }
+    </script>
 
   </body>
 </html>

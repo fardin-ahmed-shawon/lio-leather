@@ -4,6 +4,25 @@ if (!isset($_SESSION['admin'])) {
     header("Location: login.php");
     exit();
 }
+
+// Database connection
+include('database/dbConnection.php');
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch order history
+$searchQuery = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $searchQuery = $conn->real_escape_string($_GET['search']);
+    $sql = "SELECT * FROM order_info WHERE order_no LIKE '%$searchQuery%' ORDER BY order_date DESC";
+} else {
+    $sql = "SELECT * FROM order_info ORDER BY order_date DESC";
+}
+
+$result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,98 +69,58 @@ if (!isset($_SESSION['admin'])) {
             <br>
             <div class="row">
               <h1>Purchase History</h1>
-              <form class="form-group" action="#">
+              <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="search" placeholder="Search Order No" class="form-control">
-              </form>
+              </form> -->
               <div style="overflow-y: auto;">
                 <table class="table table-under-bordered">
                   <tbody>
                     <tr>
                       <th>Order No</th>
-                      <th>Customer ID</th>
+                      <th>User ID</th>
                       <th>Customer Phone</th>
+                      <th>Shipping Address</th>
                       <th>Invoice No</th>
                       <th>Product ID</th>
-                      <th>Size</th>
                       <th>Quantity</th>
                       <th>Total</th>
                       <th>Order Date</th>
                       <th>Payment Method</th>
-                      <th>Action</th>
+                      <th>Order Status</th>
+                      <!-- <th>Action</th> -->
                     </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>27</td>
-                      <td>01944667441</td>
-                      <td>X2DY435</td>
-                      <td>A37M</td>
-                      <td>XXL</td>
-                      <td>4</td>
-                      <td>1000 Tk</td>
-                      <td>12-2-2025</td>
-                      <td>Cash On Delivery</td>
-                      <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>27</td>
-                      <td>01944667441</td>
-                      <td>X2DY435</td>
-                      <td>A37M</td>
-                      <td>XXL</td>
-                      <td>4</td>
-                      <td>1000 Tk</td>
-                      <td>12-2-2025</td>
-                      <td>bKash</td>
-                      <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>27</td>
-                      <td>01944667441</td>
-                      <td>X2DY435</td>
-                      <td>A37M</td>
-                      <td>XXL</td>
-                      <td>4</td>
-                      <td>1000 Tk</td>
-                      <td>12-2-2025</td>
-                      <td>Nagad</td>
-                      <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>27</td>
-                      <td>01944667441</td>
-                      <td>X2DY435</td>
-                      <td>A37M</td>
-                      <td>XXL</td>
-                      <td>4</td>
-                      <td>1000 Tk</td>
-                      <td>12-2-2025</td>
-                      <td>Upay</td>
-                      <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>27</td>
-                      <td>01944667441</td>
-                      <td>X2DY435</td>
-                      <td>A37M</td>
-                      <td>XXL</td>
-                      <td>4</td>
-                      <td>1000 Tk</td>
-                      <td>12-2-2025</td>
-                      <td>Rocket</td>
-                      <td><button class="btn btn-danger">Delete</button></td>
-                    </tr>
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>
+                                                <td>{$row['order_no']}</td>
+                                                <td>{$row['user_id']}</td>
+                                                <td>{$row['user_phone']}</td>
+                                                <td>{$row['user_address']}</td>
+                                                <td>{$row['invoice_no']}</td>
+                                                <td>{$row['product_id']}</td>
+                                                <td>{$row['product_quantity']}</td>
+                                                <td>{$row['total_price']} Tk</td>
+                                                <td>{$row['order_date']}</td>
+                                                <td>{$row['payment_method']}</td>
+                                                <td class='order-status'>{$row['order_status']}</td>
+                                                <!--
+                                                <td><button class='btn btn-danger'>Delete</button></td>
+                                                -->
+                                            </tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='12'>No orders found</td></tr>";
+                                    }
+                                    ?>
                 </tbody>
                </table>
               </div>
             </div>
             <br>
-              <a href="#">
+              <!-- <a href="#">
                 <button class="btn btn-dark">Delete All History <span class="mdi mdi-delete"></span></button>
-              </a>
+              </a> -->
           </div>
           <!--------------------------->
           <!-- END PURCHASE HISTORY AREA -->
@@ -161,7 +140,7 @@ if (!isset($_SESSION['admin'])) {
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/misc.js"></script>
-
+    <script src="js/main.js"></script>
 
   </body>
 </html>

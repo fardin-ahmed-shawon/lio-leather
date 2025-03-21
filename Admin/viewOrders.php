@@ -75,13 +75,13 @@ include('database/dbConnection.php');
                     
                     <?php
                       // Fetch data from order_info table
-                      $sql = "SELECT order_no, user_id, user_phone, invoice_no, product_id, product_quantity, product_size, total_price, payment_method, order_date, order_status FROM order_info";
+                      $sql = "SELECT order_no, user_id, user_phone, invoice_no, product_id, product_quantity, product_size, total_price, payment_method, order_date, order_status, order_visibility FROM order_info WHERE order_status!='Pending' AND order_visibility='Show' ORDER BY order_no DESC";
                       $result = $conn->query($sql);
 
                       if ($result->num_rows > 0) {
                         echo "";
                         while($row = $result->fetch_assoc()) {
-                          if ($row["order_status"] != 'Pending') {
+                          //if ($row["order_status"] != 'Pending') {
                             echo "<tr>
                                   <td>$row[order_no]</td>
                                   <td>$row[user_id]</td>
@@ -95,12 +95,12 @@ include('database/dbConnection.php');
                                   <td>$row[payment_method]</td>
                                   <td class='order-status'>$row[order_status]</td>
                                   <td>
-                                    <a href='deleteOrder.php? o_n=$row[order_no]'>
-                                      <button class='btn btn-danger' onclick='return checkDelete()'>Delete</button>
+                                    <a href='removeOrder.php? o_n=$row[order_no]'>
+                                      <button class='btn btn-danger' onclick='return checkDelete()'>Remove</button>
                                     </a>
                                   </td>
                                 </tr>";
-                          }
+                          //}
                         }
                       }
                     ?>
@@ -136,7 +136,7 @@ include('database/dbConnection.php');
 
     <script>
       function checkDelete() {
-        return confirm('Are you sure you want to delete this data?');
+        return confirm('Are you sure you want to remove this data?');
       }
     </script>
 

@@ -70,6 +70,7 @@ CREATE TABLE order_info (
     payment_method VARCHAR(50) NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     order_status VARCHAR(50) DEFAULT 'Pending',
+    order_visibility VARCHAR(50) DEFAULT 'Show',
     FOREIGN KEY (product_id) REFERENCES product_info(product_id) ON DELETE CASCADE
 );
 
@@ -78,6 +79,7 @@ CREATE TABLE payment_info (
     invoice_no VARCHAR(50) NOT NULL,
     order_no INT NOT NULL UNIQUE,
     order_status VARCHAR(50) DEFAULT 'Pending',
+    order_visibility VARCHAR(50) DEFAULT 'Show',
     payment_method VARCHAR(50) NOT NULL,
     acc_number VARCHAR(50),
     transaction_id VARCHAR(50),

@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
                       // Fetch data from order_info table
 
                       // Grouping the same Invoice No at Order No Column
-                      $sql = "SELECT invoice_no, GROUP_CONCAT(order_no ORDER BY order_no SEPARATOR ', ') as order_no, order_status, payment_method
+                      $sql = "SELECT invoice_no, GROUP_CONCAT(order_no ORDER BY order_no SEPARATOR ', ') as order_no, order_status, order_visibility, payment_method
                       FROM order_info
                       WHERE payment_method = 'Cash On Delivery' AND order_status != 'Pending'
                       GROUP BY invoice_no, order_status, payment_method";
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
                         if ($result->num_rows > 0) {
                           $count = 1;
                           while($row = $result->fetch_assoc()) {
-                            if ($row["payment_method"] == "Cash On Delivery" && $row["order_status"] != "Pending") {
+                            if ($row["payment_method"] == "Cash On Delivery" && $row["order_status"] != "Pending" && $row["order_visibility"] == "Show") {
                               echo '<tr>
                                 <td>' . $count . '</td>
                                 <td>' . $row["invoice_no"] . '</td>
@@ -222,94 +222,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
                         <?php
                           // Query to retrieve data from payment_info table
                           $sql = "SELECT invoice_no, 
-                          GROUP_CONCAT(CASE WHEN order_status != 'Pending' THEN order_no END SEPARATOR ', ') as order_no, 
-                          serial_no, 
-                          order_status, 
-                          payment_method, 
-                          acc_number, 
-                          transaction_id, 
-                          payment_date, 
-                          payment_status 
-                          FROM payment_info 
-                          GROUP BY invoice_no";
+                                  GROUP_CONCAT(CASE 
+                                              WHEN order_status != 'Pending' AND order_visibility = 'Show' 
+                                              THEN order_no 
+                                              END SEPARATOR ', ') as order_no, 
+                                  serial_no, 
+                                  order_status, 
+                                  order_visibility, 
+                                  payment_method, 
+                                  acc_number, 
+                                  transaction_id, 
+                                  payment_date, 
+                                  payment_status 
+                                  FROM payment_info 
+                                  WHERE order_visibility = 'Show'
+                                  GROUP BY invoice_no";
                           $result = $conn->query($sql);
 
                           $count = 1;
                           if ($result->num_rows > 0) {
-                              while($row = $result->fetch_assoc()) {
+                              while ($row = $result->fetch_assoc()) {
                                   if ($row["payment_status"] == "Paid") {
-                                    echo "<tr>";
-                                    echo "<td>" . $count . "</td>";
-                                    echo "<td>" . $row["invoice_no"] . "</td>";
-                                    echo "<td>" . $row["order_no"] . "</td>";
-                                    echo "<td class='order-status'>" . $row["order_status"] . "</td>";
-                                    echo "<td>" . $row["payment_method"] . "</td>";
+                                      echo "<tr>";
+                                      echo "<td>" . $count . "</td>";
+                                      echo "<td>" . $row["invoice_no"] . "</td>";
+                                      echo "<td>" . $row["order_no"] . "</td>";
+                                      echo "<td class='order-status'>" . $row["order_status"] . "</td>";
+                                      echo "<td>" . $row["payment_method"] . "</td>";
 
-                                    //echo "<td class='invoice-button'><button onclick=\"window.location.href = 'invoice.php'\" class='btn btn-dark'>See Invoice</button></td>";
-                                    
-                                    echo '
-                                        <td class="shipped-button">
-                                          <form method="post" action="">
-                                              <input type="hidden" name="order_no" value="' . $row["order_no"] . '">
-                                              <input type="hidden" name="invoice_no" value="' . $row["invoice_no"] . '">
-                                              <button type="submit" name="mark_shipped_both" class="btn btn-success">Mark As Shipped</button>
-                                          </form>
-                                        </td>
-                                    
-                                        <td class="completed-button">
-                                          <form method="post" action="">
+                                      echo '
+                                          <td class="shipped-button">
+                                            <form method="post" action="">
                                                 <input type="hidden" name="order_no" value="' . $row["order_no"] . '">
                                                 <input type="hidden" name="invoice_no" value="' . $row["invoice_no"] . '">
-                                                <button type="submit" name="mark_completed_both" class="btn btn-success">Mark As Completed</button>
-                                          </form>
-                                        </td>
-                                        <td class="canceled-button">
-                                          <form method="post" action="">
-                                                <input type="hidden" name="order_no" value="' . $row["order_no"] . '">
-                                                <input type="hidden" name="invoice_no" value="' . $row["invoice_no"] . '">
-                                                <button type="submit" name="mark_canceled_both" class="btn btn-danger">Mark As Canceled</button>
-                                          </form>
-                                        </td>';
-                                    echo "</tr>";
-                                    $count++;
+                                                <button type="submit" name="mark_shipped_both" class="btn btn-success">Mark As Shipped</button>
+                                            </form>
+                                          </td>
+                                      
+                                          <td class="completed-button">
+                                            <form method="post" action="">
+                                                  <input type="hidden" name="order_no" value="' . $row["order_no"] . '">
+                                                  <input type="hidden" name="invoice_no" value="' . $row["invoice_no"] . '">
+                                                  <button type="submit" name="mark_completed_both" class="btn btn-success">Mark As Completed</button>
+                                            </form>
+                                          </td>
+                                          <td class="canceled-button">
+                                            <form method="post" action="">
+                                                  <input type="hidden" name="order_no" value="' . $row["order_no"] . '">
+                                                  <input type="hidden" name="invoice_no" value="' . $row["invoice_no"] . '">
+                                                  <button type="submit" name="mark_canceled_both" class="btn btn-danger">Mark As Canceled</button>
+                                            </form>
+                                          </td>';
+                                      echo "</tr>";
+                                      $count++;
                                   }
                               }
-                          } 
-                        ?>
+                          }
+                          ?>
 
-                        <!-- <tr>
-                          <td>2</td>
-                          <td>YZ849MPI</td>
-                          <td>320</td>
-                          <td class="text-danger">Canceled</td>
-                          <td>Upay</td>
-                          <td class="text-muted">Not Found</td>
-                          <td class="text-muted">Not Available</td>
-                          <td class="text-muted">Not Available</td>
-                          <td class="text-muted">Not Available</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>P749CHB93</td>
-                          <td>214</td>
-                          <td class="text-success">Shipped</td>
-                          <td>bKash</td>
-                          <td><button onclick="window.location.href = 'invoice.php'" class="btn btn-dark">See Invoice</button></td>
-                          <td class="text-muted">Not Available</td>
-                          <td><button class="btn btn-success">Mark As Completed</button></td>
-                          <td><button class="btn btn-danger">Mark As Cancel</button></td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>V749HFK2</td>
-                          <td>215</td>
-                          <td class="text-success">Completed</td>
-                          <td>Rocket</td>
-                          <td><button onclick="window.location.href = 'invoice.php'" class="btn btn-dark">See Invoice</button></td>
-                          <td class="text-muted">Not Available</td>
-                          <td class="text-muted">Not Available</td>
-                          <td class="text-muted">Not Available</td>
-                        </tr> -->
                     </tbody>
                  </table>
                 </div>
