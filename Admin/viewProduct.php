@@ -58,7 +58,11 @@ if (!isset($_SESSION['admin'])) {
                 <?php
                     include 'database/dbConnection.php';
 
-                    $sql = "SELECT * FROM product_info";
+                    $sql = "SELECT p.*, mc.main_ctg_name, sc.sub_ctg_name 
+                            FROM product_info p
+                            LEFT JOIN main_category mc ON p.main_ctg_id = mc.main_ctg_id
+                            LEFT JOIN sub_category sc ON p.sub_ctg_id = sc.sub_ctg_id";
+
                     $result = mysqli_query($conn, $sql);
                     
                     $products = array();
@@ -69,15 +73,19 @@ if (!isset($_SESSION['admin'])) {
                                   <h6>{$item['product_title']}</h6>
                                   <h4>ID: {$item['product_id']}</h4>
                                   <p>Keyword: {$item['product_keyword']}</p>
-                                  <p>Main Category: {$item['main_ctg_id']}</p>
-                                  <p>Sub Category: {$item['sub_ctg_id']}</p>
+                                  <p>Main Category: {$item['main_ctg_name']}</p>
+                                  <p>Sub Category: {$item['sub_ctg_name']}</p>
                                   <p>Available Quantity: {$item['available_stock']}</p>
-                                  <p>Size: {$item['size_option']}</p>
-                                  <h6>Tk. {$item['product_price']}</h6>
+
                                   <!--
-                                  <button class='btn btn-dark'><span>Edit</span> <span class='mdi mdi-square-edit-outline'></span></button>
-                                  <button class='btn btn-dark'><span>Delete</span> <span class='mdi mdi-trash-can-outline'></span></button>
+                                  <p>Size: {$item['size_option']}</p>
                                   -->
+                                  <h6>Tk. {$item['product_price']}</h6>
+
+                                  <button class='btn btn-dark' onclick='confirmEdit({$item['product_id']})'><span>Edit</span> <span class='mdi mdi-square-edit-outline'></span></button>
+                                  
+                                  <button class='btn btn-dark' onclick='confirmDelete({$item['product_id']})'><span>Delete</span> <span class='mdi mdi-trash-can-outline'></span></button>
+
                                   </div>
                               </div>";            
                           }
@@ -105,6 +113,19 @@ if (!isset($_SESSION['admin'])) {
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/misc.js"></script>
     <script src="js/mens.js"></script>
+
+    <script>
+      function confirmEdit(productId) {
+        window.location.href = `editProduct.php?id=${productId}`;
+      }
+
+      function confirmDelete(productId) {
+        if (confirm("Are you sure you want to delete this product?")) {
+          window.location.href = `deleteProduct.php?id=${productId}`;
+        }
+      }
+
+    </script>
 
   </body>
 </html>

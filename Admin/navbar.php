@@ -2,7 +2,13 @@
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
           <a class="navbar-brand brand-logo" href="index.php">
             <!-- <img src="assets/images/logo.svg" alt="logo" /> -->
-            <span class="logo">Lioo</span>
+            <span class="logo">
+                <!-- <a href="index.php">
+                    <img src="../img/lioo-logo.png" alt="Lioo" style="width: 100px;">
+                </a> -->
+
+                Lioo
+            </span>
           </a>
           <a class="navbar-brand brand-logo-mini" href="index.php">
             <img src="assets/images/logo-mini.svg" alt="logo" />

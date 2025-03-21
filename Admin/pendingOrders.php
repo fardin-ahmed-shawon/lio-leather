@@ -70,9 +70,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['accept_order'])) {
             <br>
             <div class="row">
               <h1>Pending Orders</h1>
-              <form class="form-group" action="#">
+              <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="search" placeholder="Search Order No" class="form-control">
-              </form>
+              </form> -->
               <!-- Table Area -->
               <div style="overflow-y: auto;">
                 <table class="table table-under-bordered">

@@ -51,9 +51,9 @@ if (!isset($_SESSION['admin'])) {
             <br>
             <div class="row">
               <h1>Your Customer List</h1>
-              <form class="form-group" action="#">
+              <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="search" placeholder="Search Customer" class="form-control">
-              </form>
+              </form> -->
               <!-- Table Area -->
               <div style="overflow-y: auto;">
                 <table class="table table-under-bordered">
@@ -66,7 +66,7 @@ if (!isset($_SESSION['admin'])) {
                         <th>Customer Phone</th>
                         <th>Customer Email</th>
                         <th>Gender</th>
-                        <th>Action</th>
+                        <!-- <th>Action</th> -->
                       </tr>
                       <?php
                       include 'database/dbConnection.php';
@@ -84,7 +84,7 @@ if (!isset($_SESSION['admin'])) {
                             echo "<td>" . $row["user_phone"] . "</td>";
                             echo "<td>" . $row["user_email"] . "</td>";
                             echo "<td>" . $row["user_gender"] . "</td>";
-                            echo '<td><button class="btn btn-dark">Remove</button></td>';
+                            //echo '<td><button class="btn btn-dark">Remove</button></td>';
                             echo "</tr>";
                           }
                       } else {

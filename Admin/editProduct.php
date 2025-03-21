@@ -9,6 +9,28 @@ if (!isset($_SESSION['admin'])) {
 
 include('database/dbConnection.php'); // Include database connection file
 
+// Retrieve product ID from query string
+if (isset($_GET['id'])) {
+    $productId = $_GET['id'];
+
+    // Fetch product details
+    $query = "SELECT * FROM product_info WHERE product_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $productId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$product) {
+        echo "<script>alert('Product not found!'); window.location.href='viewProduct.php';</script>";
+        exit();
+    }
+} else {
+    echo "<script>alert('No product ID provided!'); window.location.href='viewProduct.php';</script>";
+    exit();
+}
+
 // Image Compression Function
 function compressImage($source, $destination, $quality = 75) {
     $imgInfo = getimagesize($source);
@@ -39,13 +61,13 @@ function compressImage($source, $destination, $quality = 75) {
     return true;
 }
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_title = $_POST['product_title'];
     $product_price = $_POST['product_price'];
     $product_main_ctg_id = $_POST['product_main_ctg'];
     $product_sub_ctg_id = $_POST['product_sub_ctg'];
     $available_stock = $_POST['available_stock'];
-    $size_option = "Default";
     $product_keyword = $_POST['product_keyword'];
     $product_description = $_POST['product_description'];
 
@@ -58,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ];
 
     $uploadSuccess = true;
-    $originalFiles = [];
     $compressedFiles = [];
 
     foreach ($images as $index => $image) {
@@ -68,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (move_uploaded_file($image['tmp_name'], $folder)) {
                 if (compressImage($folder, $compressed_folder, 60)) {
-                    $originalFiles[] = $folder; // Track the original file
                     $compressedFiles[] = $compressed_folder; // Track the compressed file
                 } else {
                     $uploadSuccess = false;
@@ -79,28 +99,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
             }
         } else {
-            $compressedFiles[] = null; // No file uploaded for this index
+            $compressedFiles[] = $product['product_img' . ($index + 1)]; // Keep existing image if no new upload
         }
     }
 
     if ($uploadSuccess) {
-        // Prepare the SQL query
-        $query = "INSERT INTO product_info (product_title, product_price, main_ctg_id, sub_ctg_id, available_stock, size_option, product_keyword, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+        // Update query
+        $query = "UPDATE product_info SET product_title = ?, product_price = ?, main_ctg_id = ?, sub_ctg_id = ?, available_stock = ?, product_keyword = ?, product_description = ?, product_img1 = ?, product_img2 = ?, product_img3 = ?, product_img4 = ? WHERE product_id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sdssisssssss", $product_title, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $size_option, $product_keyword, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3]);
+        $stmt->bind_param("sdssissssssi", $product_title, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $product_keyword, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3], $productId);
 
-        // Execute the query
         if ($stmt->execute()) {
-            $product_added_status = "Product Added Successfully!";
-            // Delete the original images after successful database entry
-            foreach ($originalFiles as $file) {
-                unlink($file);
-            }
+            echo "<script>alert('Product updated successfully!'); window.location.href='viewProduct.php';</script>";
         } else {
             echo "Error: " . $stmt->error;
         }
-
+        $stmt->close();
     } else {
         echo "Failed to upload one or more images.";
     }
@@ -153,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
           <!--------------------------->
-          <!-- START ADD PRODUCT AREA -->
+          <!-- START UPDATE PRODUCT AREA -->
           <!--------------------------->
           <div class="content-wrapper">
             <div class="page-header">
@@ -171,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
             <div class="row">
               <div class="form-container">
-                <h1 class="text-center">Add Product</h1>
+                <h1 class="text-center">Update Product</h1>
                 <div class="content">
                     <!-- Product Add form -->
                     <form action="" method="post" enctype="multipart/form-data">
@@ -179,12 +193,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <!-- title -->
                         <div class="input-box">
                           <span class="details">Product Title *</span>
-                          <input name="product_title" type="text" placeholder="Enter your product title" required>
+                          <input name="product_title" type="text" placeholder="Enter your product title" value="<?php echo htmlspecialchars($product['product_title']); ?>" required>
                         </div>
                         <!-- price -->
                         <div class="input-box">
                           <span class="details">Price *</span>
-                          <input name="product_price" type="text" placeholder="Enter your product price" required>
+                          <input name="product_price" type="text" placeholder="Enter your product price" value="<?php echo htmlspecialchars($product['product_price']); ?>" required>
                         </div>
                         <!-- Main Category -->
                         <div class="input-box">
@@ -192,13 +206,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <select id="main_ctg_name" name="product_main_ctg" required>
                             <option value="">Select Main Category</option>
                             <?php
-                              // Fetch main categories from the database
-                              $result = mysqli_query($conn, "SELECT main_ctg_id, main_ctg_name FROM main_category");
-                              while ($row = mysqli_fetch_assoc($result)) {
-                                $category_name = htmlspecialchars($row['main_ctg_name'], ENT_QUOTES, 'UTF-8');
-                                $category_id = $row['main_ctg_id'];
-                                  echo "<option value='$category_id'>$category_name</option>";
-                              }
+                            $result = mysqli_query($conn, "SELECT main_ctg_id, main_ctg_name FROM main_category");
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $selected = $row['main_ctg_id'] == $product['main_ctg_id'] ? 'selected' : '';
+                                echo "<option value='{$row['main_ctg_id']}' $selected>{$row['main_ctg_name']}</option>";
+                            }
                             ?>
                           </select>
                         </div>
@@ -208,25 +220,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <select id="main_sub_name" name="product_sub_ctg" required>
                             <option value="">Select Sub Category</option>
                             <?php
-                              // Fetch main categories from the database
-                              $result = mysqli_query($conn, "SELECT sub_ctg_id, sub_ctg_name FROM sub_category");
-                              while ($row = mysqli_fetch_assoc($result)) {
-                                $category_name = htmlspecialchars($row['sub_ctg_name'], ENT_QUOTES, 'UTF-8');
-                                $category_id = $row['sub_ctg_id'];
-                                  echo "<option value='$category_id'>$category_name</option>";
-                              }
+                            $result = mysqli_query($conn, "SELECT sub_ctg_id, sub_ctg_name FROM sub_category");
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $selected = $row['sub_ctg_id'] == $product['sub_ctg_id'] ? 'selected' : '';
+                                echo "<option value='{$row['sub_ctg_id']}' $selected>{$row['sub_ctg_name']}</option>";
+                            }
                             ?>
                           </select>
                         </div>
                         <!-- Total Stock -->
                         <div class="input-box">
                           <span class="details">Total Stock Amount *</span>
-                          <input name="available_stock" type="text" placeholder="Enter your total stock amount" required>
+                          <input name="available_stock" type="text" placeholder="Enter your total stock amount" value="<?php echo htmlspecialchars($product['available_stock']); ?>" required>
                         </div>
                         <!-- keyword -->
                         <div class="input-box">
                           <span class="details">Product Keyword *</span>
-                          <input name="product_keyword" type="text" placeholder="Enter your product keyword" required>
+                          <input name="product_keyword" type="text" placeholder="Enter your product keyword" value="<?php echo htmlspecialchars($product['product_keyword']); ?>" required>
                         </div>
                         <!-- Description -->
 
@@ -237,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         <div class="form-group m-auto"> 
                           <span class="details">Product Description *</span>
-                          <textarea id="summernote" rows="4" name="product_description" cols="58" class="mytextarea"> </textarea>
+                          <textarea id="summernote" rows="4" name="product_description" cols="58" class="mytextarea"><?php echo htmlspecialchars($product['product_description']); ?></textarea>
                         </div>
                         <br><br>
 
@@ -251,46 +261,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           </script>
 
 
-                        <!-- Size -->
-                        <!-- <span class="details">Product Available Size</span>
-                        <div class="input-checkbox">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="S" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              S
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="M" id="flexCheckChecked">
-                            <label class="form-check-label" for="flexCheckChecked">
-                              M
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="L" id="flexCheckChecked">
-                            <label class="form-check-label" for="flexCheckChecked">
-                              L
-                            </label>
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="XL" id="flexCheckChecked">
-                              <label class="form-check-label" for="flexCheckChecked">
-                                XL
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="XXL" id="flexCheckChecked">
-                              <label class="form-check-label" for="flexCheckChecked">
-                                XXL
-                              </label>
-                            </div>
-                          </div>
-                        </div> -->
-
                         <!-- main image -->
                         <div>
                           <span class="details">Attach Primary Image *</span>
                           <h4>(1000 X 1000)</h4>
-                          <input type="file" name="product_img1" id="file" class="inputfile" required/><br>
+                          <input type="file" name="product_img1" id="file" class="inputfile"/><br>
                         </div>
                         <!-- image 2 -->
                         <div>
@@ -313,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       </div>
                       <!-- Submit button -->
                       <div class="button">
-                        <input type="submit" value="Add Product">
+                        <input type="submit" value="Update Product">
                       </div>
                     </form>
                     

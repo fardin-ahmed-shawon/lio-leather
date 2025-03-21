@@ -91,9 +91,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['mark_cancel'])) {
             <br>
             <div class="row">
               <h1>All Payments</h1>
-              <form class="form-group" action="#">
+              <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="search" placeholder="Search Invoice No" class="form-control">
-              </form>
+              </form> -->
               <!-- Table Area -->
               <div style="overflow-y: auto;">
                 <table class="table table-under-bordered">

@@ -123,9 +123,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
             <br><hr><br>
             <div class="row">
               <h1>Cash On Delivery</h1>
-              <form class="form-group" action="#">
+              <!-- <form class="form-group" action="#">
                 <input type="search" name="search" id="search" placeholder="Search Invoice No" class="form-control">
-              </form>
+              </form> -->
               <!-- Table Area -->
               <div style="overflow-y: auto;">
                 <table class="table table-under-bordered">
@@ -193,40 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
                           }
                         } 
                       ?>
-
-                      <!-- <tr>
-                        <td>2</td>
-                        <td>A7HBL83</td>
-                        <td>110</td>
-                        <td class="text-danger">Canceled</td>
-                        <td>Cash On Delivery</td>
-                        <td class="text-muted">Not Found</td>
-                        <td class="text-muted">Not Available</td>
-                        <td class="text-muted">Not Available</td>
-                        <td class="text-muted">Not Available</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>AB2DY435</td>
-                        <td>114</td>
-                        <td class="text-success">Shipped</td>
-                        <td>Cash On Delivery</td>
-                        <td><button onclick="window.location.href = 'invoice.php'" class="btn btn-dark">See Invoice</button></td>
-                        <td class="text-muted">Not Available</td>
-                        <td><button class="btn btn-success">Mark As Completed</button></td>
-                        <td><button class="btn btn-danger">Mark As Cancel</button></td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>X2DY430</td>
-                        <td>115</td>
-                        <td class="text-success">Completed</td>
-                        <td>Cash On Delivery</td>
-                        <td><button onclick="window.location.href = 'invoice.php'" class="btn btn-dark">See Invoice</button></td>
-                        <td class="text-muted">Not Available</td>
-                        <td class="text-muted">Not Available</td>
-                        <td class="text-muted">Not Available</td>
-                      </tr> -->
                   </tbody>
                </table>
               </div>
@@ -234,9 +200,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
             <br><hr><br>
             <div class="row">
                 <h1>Mobile Banking</h1>
-                <form class="form-group" action="#">
+                <!-- <form class="form-group" action="#">
                   <input type="search" name="search" id="search" placeholder="Search Invoice No" class="form-control">
-                </form>
+                </form> -->
                 <!-- Table Area -->
                 <div style="overflow-y: auto;">
                   <table class="table table-under-bordered">
@@ -247,22 +213,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
                           <th>Order No</th>
                           <th>Order Status</th>
                           <th>Payment Method</th>
-                          <th>Invoice List</th>
+                          <!-- <th>Invoice List</th> -->
                           <th>Shipped</th>
                           <th>Completed</th>
                           <th>Canceled</th>
                         </tr>
-                        <!-- <tr>
-                          <td>1</td>
-                          <td>M7GB83IS</td>
-                          <td>206, 207</td>
-                          <td class="text-success">Processing</td>
-                          <td>bKash</td>
-                          <td><button onclick="window.location.href = 'invoice.php'" class="btn btn-dark">See Invoice</button></td>
-                          <td><button class="btn btn-success">Mark As Shipped</button></td>
-                          <td><button class="btn btn-success">Mark As Completed</button></td>
-                          <td><button class="btn btn-danger">Mark As Cancel</button></td>
-                        </tr> -->
 
                         <?php
                           // Query to retrieve data from payment_info table
@@ -289,7 +244,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mark_canceled_both"]))
                                     echo "<td>" . $row["order_no"] . "</td>";
                                     echo "<td class='order-status'>" . $row["order_status"] . "</td>";
                                     echo "<td>" . $row["payment_method"] . "</td>";
-                                    echo "<td class='invoice-button'><button onclick=\"window.location.href = 'invoice.php'\" class='btn btn-dark'>See Invoice</button></td>";
+
+                                    //echo "<td class='invoice-button'><button onclick=\"window.location.href = 'invoice.php'\" class='btn btn-dark'>See Invoice</button></td>";
+                                    
                                     echo '
                                         <td class="shipped-button">
                                           <form method="post" action="">
