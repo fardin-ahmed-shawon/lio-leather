@@ -13,7 +13,9 @@
             </div>
 
             <div class="logo">
-            <a href="index.php"><span>Lioo.</span></a>
+                <a href="index.php"><span>
+                    <img src="img/lioo-logo.png" alt="Lioo" style="width: 120px;">
+                </span></a>
             </div>
 
             <div class="search-area">
@@ -69,12 +71,17 @@
             <div>
                 <div class="hide-menu" id="mobile-menu-btn">
                     <br>
-                    <a href="#" onclick="closeMenuBtn()">
-                        <i class="ri-menu-3-line"></i>
-                    </a>
+                    <div class="close-mobile-menu-btn">
+                        <a href="#" onclick="closeMenuBtn()">
+                            <i class="ri-menu-3-line"></i>
+                        </a>
+                    </div>
                     <!-- Logo -->
+                    <br>
                     <div>
-                        <a href="index.php"><span class="bold-title">Lioo</span></a>
+                        <a href="index.php"><span>
+                            <img src="img/lioo-logo.png" alt="Lioo" style="width: 120px;">
+                        </span></a>
                     </div>
                 </div>
                 <hr>

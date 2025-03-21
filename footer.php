@@ -5,7 +5,9 @@
     <div class="container footer-grid-container">
         <div class="business">
             <div class="logo">
-                <a href="index.php"><span>Lioo.</span></a>
+                <a href="index.php"><span>
+                    <img src="img/lioo-logo.png" alt="Lioo" style="width: 120px;">
+                </span></a>
             </div>
             <br>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed id natus laboriosam autem nam magni corporis, itaque fuga deserunt provident.</p>
