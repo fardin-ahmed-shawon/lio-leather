@@ -111,3 +111,7 @@ CREATE TABLE review_table (
     datetime INT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES product_info(product_id) ON DELETE CASCADE
 );
+
+
+ALTER TABLE product_info
+ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;

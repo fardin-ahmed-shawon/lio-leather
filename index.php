@@ -372,6 +372,7 @@ include 'cartBar.php';
                 wrapper.addEventListener("mouseleave", autoPlay);
             </script>
 
+
     <!-- New Arrival Area -->
      <section class="new-arrival py-5">
         <div class="container">
@@ -381,7 +382,7 @@ include 'cartBar.php';
                     <p>Explore all the new product</p>
                 </div>
                 <div class="btn-align-end">
-                    <a href="">
+                    <a href="shop.php">
                         <button class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
                     </a>
                 </div>
@@ -393,7 +394,10 @@ include 'cartBar.php';
                     $sql = "SELECT product_info.*, main_category.main_ctg_name 
                             FROM product_info 
                             JOIN main_category 
-                            ON product_info.main_ctg_id = main_category.main_ctg_id";
+                            ON product_info.main_ctg_id = main_category.main_ctg_id
+                            ORDER BY product_info.product_id DESC 
+                            LIMIT 10";
+
                     $result = mysqli_query($conn, $sql);
                     
                     $products = array();
@@ -425,7 +429,7 @@ include 'cartBar.php';
                     <p>Explore all the top selling product</p>
                 </div>
                 <div class="btn-align-end">
-                    <a href="">
+                    <a href="shop.php">
                         <button class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
                     </a>
                 </div>
@@ -437,7 +441,7 @@ include 'cartBar.php';
                     $sql = "SELECT product_info.*, main_category.main_ctg_name 
                             FROM product_info 
                             JOIN main_category 
-                            ON product_info.main_ctg_id = main_category.main_ctg_id";
+                            ON product_info.main_ctg_id = main_category.main_ctg_id LIMIT 10";
                     $result = mysqli_query($conn, $sql);
                     
                     $products = array();
@@ -463,72 +467,55 @@ include 'cartBar.php';
     <!--=====================================================-->
     <!--============= All Category List & Items =============-->
     <div class="all-categories">
-        
-        <!-- Category 1 -->
-        <!-- <section class="py-5">
-            <div class="container">
-                <div class="grid-container-2x">
-                    <div class="title-align-left">
-                        <h1>Category 1</h1>
-                        <p>Explore all the category 1 products</p>
-                    </div>
-                    <div class="btn-align-end">
-                        <button onclick="window.location.href='category.php';" class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
-                    </div>
-                </div>
-                <br><hr><br>
-                <div class="grid-container home-mens-fashion-products">
-                    <?php
-                        // $sql = "SELECT product_info.*, main_category.main_ctg_name 
-                        //         FROM product_info 
-                        //         JOIN main_category 
-                        //         ON product_info.main_ctg_id = main_category.main_ctg_id";
-                        // $result = mysqli_query($conn, $sql);
+        <?php
+            include 'database/dbConnection.php';
+
+            // Fetch main categories
+            $mainCategoriesSql = "SELECT * FROM main_category";
+            $mainCategoriesResult = $conn->query($mainCategoriesSql);
+            $count = 0;
+            if ($mainCategoriesResult->num_rows > 0) {
+                while ($mainCategory = $mainCategoriesResult->fetch_assoc()) {
+                    $categoryName = $mainCategory['main_ctg_name'];
+                    $categoryId = $mainCategory['main_ctg_id'];
+
+                    // Fetch products for each category
+                    $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                        FROM product_info 
+                        JOIN main_category 
+                        ON product_info.main_ctg_id = main_category.main_ctg_id 
+                        WHERE product_info.main_ctg_id = $categoryId LIMIT 10";
+
+                    $result = mysqli_query($conn, $sql);
+
+
+                    // Skip if no product found for this category
+                    if (mysqli_num_rows($result) <= 0) {
+                        continue;
+                    }
+
+                    // printing product card
+                    if ($count % 2 == 0) {
+                        echo '<section class="py-5">';
+                    } else {
+                        echo '<section class="py-5 bg-gray1">';
+                    }
+
+                    echo '        <div class="container">
+                                <div class="grid-container-2x">
+                                    <div class="title-align-left">
+                                        <h1>'.$categoryName.'</h1>
+                                        <p>Explore All The '.$categoryName.' Products</p>
+                                    </div>
+                                    <div class="btn-align-end">
+                                        <button onclick="window.location.href=\'category.php?main_ctg_id='.$categoryId.'\';" class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
+                                    </div>
+                                </div>
+                                <br><hr><br>
+                                <div class="grid-container">
+                    ';
                         
                         // $products = array();
-                        // while ($item = mysqli_fetch_array($result)) {
-                        //     echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
-                        //     <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
-                        //     <div class='card-body'>
-                        //         <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
-                        //         <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
-                        //         <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>Tk. $item[product_price]</h6>
-                        //         <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
-                        //         <a href='product.php?pi=$item[product_id]'>
-                        //             <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
-                        //         </a>
-                        //     </div>
-                        // </div>";
-                        // }
-                    ?>
-                </div>
-            </div>
-        </section> -->
-
-        <!-- Category 2 -->
-        <!-- <section class="py-5 bg-gray">
-            <div class="container">
-                <div class="grid-container-2x">
-                    <div class="title-align-left">
-                        <h1>Category 2</h1>
-                        <p>Explore all the category 2 products</p>
-                    </div>
-                    <div class="btn-align-end">
-                        <a href="#">
-                            <button  onclick="window.location.href='category.php';" class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
-                        </a>
-                    </div>
-                </div>
-                <br><hr><br>
-                <div class="grid-container home-womens-fashion-products">
-                    <?php
-                        $sql = "SELECT product_info.*, main_category.main_ctg_name 
-                                FROM product_info 
-                                JOIN main_category 
-                                ON product_info.main_ctg_id = main_category.main_ctg_id";
-                        $result = mysqli_query($conn, $sql);
-                        
-                        $products = array();
                         while ($item = mysqli_fetch_array($result)) {
                             echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
                             <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
@@ -543,12 +530,21 @@ include 'cartBar.php';
                             </div>
                         </div>";
                         }
-                    ?>
-                </div>
-            </div>
-        </section> -->
+
+                    echo '</div>
+                        </div>
+                    </section>'
+                    ;  
+
+                    $count++;
+
+                }
+            }
+        ?>
+        
             
-    </div>  
+    </div> 
+    
 </div>
 <!--==========================================-->
 <!--============ END HOME SECTION ==========-->

@@ -9,9 +9,9 @@
                 <p>Home</p>
             </a>
             </li>
-            <li><a href="#" onclick="openMenuBtn()">
+            <li><a href="shop.php" onclick="openMenuBtn()">
                 <i class="ri-apps-line"></i>
-                <p>Category</p>
+                <p>Shop</p>
             </a></li>
             <li><a href="#">
                 <i class="ri-phone-line"></i>

@@ -36,7 +36,7 @@
                     <i class="ri-phone-line"></i>
                     <div class="txt-area">
                         <p class="bold-title">Online Shopping</p>
-                        <p class="gray-title">+8801944667441</p>
+                        <p class="gray-title">+8801XXXXXX</p>
                     </div>
                 </div>
 
@@ -74,12 +74,13 @@
                     </a>
                     <!-- Logo -->
                     <div>
-                        <a href="index.php"><span class="bold-title">LOGO</span></a>
+                        <a href="index.php"><span class="bold-title">Lioo</span></a>
                     </div>
                 </div>
                 <hr>
                 <ul>
                     <li><a href="index.php">Home</a></li>
+                    <li><a href="shop.php">Shop</a></li>
                     <?php
                         include 'database/dbConnection.php';
 
