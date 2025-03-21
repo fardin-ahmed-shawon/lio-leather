@@ -70,7 +70,6 @@ CREATE TABLE order_info (
     payment_method VARCHAR(50) NOT NULL,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     order_status VARCHAR(50) DEFAULT 'Pending',
-    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product_info(product_id) ON DELETE CASCADE
 );
 

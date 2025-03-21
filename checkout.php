@@ -1,10 +1,13 @@
 <?php
 error_reporting(E_ALL);
 session_start();
-if (!isset($_SESSION['phone'])) {
-    header("Location: login.php?rd='checkout'");
-    exit();
-}
+
+// Redirect to login page if user is not logged in
+// if (!isset($_SESSION['phone'])) {
+//     header("Location: login.php?rd='checkout'");
+//     exit();
+// }
+
 // database connection
 include 'database/dbConnection.php';
 
@@ -24,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $transactionID = $_POST['transactionID'];
 
     // Assuming you have user_id in session
-    $user_id = $_SESSION['id'];
+    // $user_id = $_SESSION['id'];
+    $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : '0'; 
+    
 
     // Generate a unique invoice number
     function generateInvoiceNo() {
