@@ -71,16 +71,22 @@
     		</div>
     	</div>
     	<div class="mt-5" id="review_content"></div>
+        <!-- <div class="see-all text-end">
+            <br>
+            <a href="#">
+                <button class="btn btn-dark px-5 py-3">See All Review</button>
+            </a>
+        </div> -->
     </div>
 
 
 <div id="review_modal" class="modal" tabindex="-1" role="dialog">
-  	<div class="modal-dialog" role="document">
+  	<div class="modal-dialog" role="document" style="margin-top: 110px;">
     	<div class="modal-content">
 	      	<div class="modal-header">
 	        	<h5 class="modal-title">Submit Review</h5>
-	        	<button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
-	          		<span aria-hidden="true"> &times;</span>
+	        	<button type="button" class="btn btn-close" data-close-modal aria-label="Close">
+	          		<span class="d-none" aria-hidden="true"> &times;</span>
 	        	</button>
 	      	</div>
 	      	<div class="modal-body">
@@ -92,7 +98,7 @@
                     <i class="fas fa-star star-light submit_star mr-1" id="submit_star_5" data-rating="5"></i>
 	        	</h4>
 	        	<div class="form-group">
-                <input type="hidden" name="product_id" id="product_id" value="<?php echo htmlspecialchars($_GET['pi']); ?>" />
+                    <input type="hidden" name="product_id" id="product_id" value="<?php echo htmlspecialchars($_GET['pi']); ?>" />
 	        		<input type="text" name="user_name" id="user_name" class="form-control" placeholder="Enter Your Name" />
 	        	</div><br>
 	        	<div class="form-group">
@@ -105,7 +111,6 @@
     	</div>
   	</div>
 </div>
-
 <style>
 .progress-label-left
 {
@@ -123,6 +128,11 @@
 {
 	color:#e9ecef;
 }
+#review_content {
+    max-height: 700px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 </style>
 
 <script>
@@ -135,6 +145,11 @@ $(document).ready(function(){
 
         $('#review_modal').modal('show');
 
+    });
+
+    // Close modal on custom close button click
+    $(document).on('click', '[data-close-modal]', function() {
+        $('#review_modal').modal('hide');
     });
 
     $(document).on('mouseenter', '.submit_star', function(){
@@ -213,103 +228,80 @@ $(document).ready(function(){
 
     load_rating_data();
 
-    function load_rating_data()
-    {
-        $.ajax({
-            url:"submit_rating.php",
-            method:"POST",
-            data:{action:'load_data'},
-            dataType:"JSON",
-            success:function(data)
-            {
-                $('#average_rating').text(data.average_rating);
-                $('#total_review').text(data.total_review);
+    function load_rating_data() {
+    var product_id = $('#product_id').val(); // Get the product_id value
 
-                var count_star = 0;
+    $.ajax({
+        url: "submit_rating.php",
+        method: "POST",
+        data: {
+            action: 'load_data',
+            product_id: product_id // Send product_id
+        },
+        dataType: "JSON",
+        success: function(data) {
+            $('#average_rating').text(data.average_rating);
+            $('#total_review').text(data.total_review);
 
-                $('.main_star').each(function(){
-                    count_star++;
-                    if(Math.ceil(data.average_rating) >= count_star)
-                    {
-                        $(this).addClass('text-warning');
-                        $(this).addClass('star-light');
-                    }
-                });
+            var count_star = 0;
 
-                $('#total_five_star_review').text(data.five_star_review);
+            $('.main_star').each(function() {
+                count_star++;
+                if (Math.ceil(data.average_rating) >= count_star) {
+                    $(this).addClass('text-warning');
+                    $(this).addClass('star-light');
+                }
+            });
 
-                $('#total_four_star_review').text(data.four_star_review);
+            $('#total_five_star_review').text(data.five_star_review);
+            $('#total_four_star_review').text(data.four_star_review);
+            $('#total_three_star_review').text(data.three_star_review);
+            $('#total_two_star_review').text(data.two_star_review);
+            $('#total_one_star_review').text(data.one_star_review);
 
-                $('#total_three_star_review').text(data.three_star_review);
+            $('#five_star_progress').css('width', (data.five_star_review / data.total_review) * 100 + '%');
+            $('#four_star_progress').css('width', (data.four_star_review / data.total_review) * 100 + '%');
+            $('#three_star_progress').css('width', (data.three_star_review / data.total_review) * 100 + '%');
+            $('#two_star_progress').css('width', (data.two_star_review / data.total_review) * 100 + '%');
+            $('#one_star_progress').css('width', (data.one_star_review / data.total_review) * 100 + '%');
 
-                $('#total_two_star_review').text(data.two_star_review);
+            if (data.review_data.length > 0) {
+                var html = '';
 
-                $('#total_one_star_review').text(data.one_star_review);
+                for (var count = 0; count < data.review_data.length; count++) {
+                    html += '<div class="row mb-3">';
+                    html += '<div class="col-sm-1"><div class="reviewer-dp text-danger pt-2 pb-2"><h3 class="text-center">' + data.review_data[count].user_name.charAt(0) + '</h3></div></div>';
+                    html += '<div class="col-sm-11">';
+                    html += '<div class="card">';
+                    html += '<div class="card-header"><b>' + data.review_data[count].user_name + '</b></div>';
+                    html += '<div class="card-body">';
 
-                $('#five_star_progress').css('width', (data.five_star_review/data.total_review) * 100 + '%');
+                    for (var star = 1; star <= 5; star++) {
+                        var class_name = '';
 
-                $('#four_star_progress').css('width', (data.four_star_review/data.total_review) * 100 + '%');
-
-                $('#three_star_progress').css('width', (data.three_star_review/data.total_review) * 100 + '%');
-
-                $('#two_star_progress').css('width', (data.two_star_review/data.total_review) * 100 + '%');
-
-                $('#one_star_progress').css('width', (data.one_star_review/data.total_review) * 100 + '%');
-
-                if(data.review_data.length > 0)
-                {
-                    var html = '';
-
-                    for(var count = 0; count < data.review_data.length; count++)
-                    {
-                        html += '<div class="row mb-3">';
-
-                        html += '<div class="col-sm-1"><div class="reviewer-dp text-danger pt-2 pb-2"><h3 class="text-center">'+data.review_data[count].user_name.charAt(0)+'</h3></div></div>';
-
-                        html += '<div class="col-sm-11">';
-
-                        html += '<div class="card">';
-
-                        html += '<div class="card-header"><b>'+data.review_data[count].user_name+'</b></div>';
-
-                        html += '<div class="card-body">';
-
-                        for(var star = 1; star <= 5; star++)
-                        {
-                            var class_name = '';
-
-                            if(data.review_data[count].rating >= star)
-                            {
-                                class_name = 'text-warning';
-                            }
-                            else
-                            {
-                                class_name = 'star-light';
-                            }
-
-                            html += '<i class="fas fa-star '+class_name+' mr-1"></i>';
+                        if (data.review_data[count].rating >= star) {
+                            class_name = 'text-warning';
+                        } else {
+                            class_name = 'star-light';
                         }
 
-                        html += '<br />';
-
-                        html += data.review_data[count].user_review;
-
-                        html += '</div>';
-
-                        html += '<div class="card-footer text-right">On '+data.review_data[count].datetime+'</div>';
-
-                        html += '</div>';
-
-                        html += '</div>';
-
-                        html += '</div>';
+                        html += '<i class="fas fa-star ' + class_name + ' mr-1"></i>';
                     }
 
-                    $('#review_content').html(html);
+                    html += '<br />';
+                    html += data.review_data[count].user_review;
+                    html += '</div>';
+                    html += '<div class="card-footer text-right">On ' + data.review_data[count].datetime + '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
                 }
+
+                $('#review_content').html(html);
             }
-        })
-    }
+        }
+    });
+}
 
 });
 

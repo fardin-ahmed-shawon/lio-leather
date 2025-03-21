@@ -1,16 +1,15 @@
 <?php
 
-//submit_rating.php
-$connect = new PDO("mysql:host=localhost;dbname=liooxzpx_lioo_leather", "root", "");
+//connection
+include 'database/reviewConnection.php';
 
 session_start();
 
 if(isset($_POST["rating_data"]))
 {
-
 	$data = array(
         ':product_id'		=>	$_POST["product_id"],
-        ':user_id'		    =>	$_SESSION['id'],
+        ':user_id' 			=> isset($_SESSION['id']) ? $_SESSION['id'] : '0',
 		':user_name'		=>	$_POST["user_name"],
 		':user_rating'		=>	$_POST["rating_data"],
 		':user_review'		=>	$_POST["user_review"],
@@ -33,6 +32,7 @@ if(isset($_POST["rating_data"]))
 
 if(isset($_POST["action"]))
 {
+	$product_id = $_POST["product_id"]; // Receive product_id
 	$average_rating = 0;
 	$total_review = 0;
 	$five_star_review = 0;
@@ -43,10 +43,8 @@ if(isset($_POST["action"]))
 	$total_user_rating = 0;
 	$review_content = array();
 
-	$query = "
-	SELECT * FROM review_table 
-	ORDER BY review_id DESC
-	";
+	
+	$query = "SELECT * FROM review_table WHERE product_id = '$product_id' ORDER BY review_id DESC LIMIT 5";
 
 	$result = $connect->query($query, PDO::FETCH_ASSOC);
 

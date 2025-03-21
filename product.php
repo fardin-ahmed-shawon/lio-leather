@@ -135,8 +135,8 @@ include 'cartBar.php';
                     ";
                 }
             ?>
+        <br><br><hr>
     </div>
-    <br><br><hr><br>
 </section>
 <!--========================================-->
 <!--============ END PRODUCT AREA ==========-->
@@ -145,8 +145,10 @@ include 'cartBar.php';
 <!--==========================================-->
 <!-- Rating and Review Section -->
 <!--==========================================-->
-
 <?php include 'ratings.php'; ?>
+<div class="container">
+<br><hr><br>
+</div>
 <!--==========================================-->
 
 
