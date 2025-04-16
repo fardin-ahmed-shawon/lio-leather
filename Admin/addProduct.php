@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_keyword = $_POST['product_keyword'];
     $product_description = $_POST['product_description'];
     $product_code = $_POST['product_code'];
+    $product_type = $_POST['product_type'];
 
     // Array to store image details
     $images = [
@@ -87,10 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($uploadSuccess) {
         // Prepare the SQL query
-        $query = "INSERT INTO product_info (product_title, product_regular_price, product_price, main_ctg_id, sub_ctg_id, available_stock, size_option, product_keyword, product_code, product_description, product_img1, product_img2, product_img3, product_img4) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO product_info (product_title, product_regular_price, product_price, main_ctg_id, sub_ctg_id, available_stock, size_option, product_keyword, product_code, product_description, product_img1, product_img2, product_img3, product_img4, product_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sddssissssssss", $product_title, $product_regular_price, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $size_option, $product_keyword, $product_code, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3]);
+        $stmt->bind_param("sddssisssssssss", $product_title, $product_regular_price, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $size_option, $product_keyword, $product_code, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3], $product_type);
 
         // Execute the query
         if ($stmt->execute()) {
@@ -237,8 +238,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <!-- product code -->
                         <div class="input-box">
-                          <span class="details">Product Code *</span>
-                          <input name="product_code" type="text" placeholder="Enter your product code" required>
+                          <span class="details">Product Code</span>
+                          <input name="product_code" type="text" placeholder="Enter your product code">
+                        </div>
+                        <!-- product type -->
+                        <div class="input-box">
+                          <span class="details">Choose Product Type</span>
+                          <select id="product_type" name="product_type">
+                            <option value="">Select Product Type</option>
+                            <option value='new_arrival'>New Arrival</option>
+                            <option value='top_selling'>Top Selling</option>
+                          </select>
                         </div>
                         <!-- Description -->
 

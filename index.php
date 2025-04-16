@@ -390,7 +390,7 @@ include 'cartBar.php';
                 </div>
                 <div class="btn-align-end">
                     <a href="shop.php">
-                        <button class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
+                        <button class="btn btn-dark btn-see-all">See All The Products <i class="ri-arrow-right-line"></i></button>
                     </a>
                 </div>
             </div>
@@ -402,8 +402,8 @@ include 'cartBar.php';
                             FROM product_info 
                             JOIN main_category 
                             ON product_info.main_ctg_id = main_category.main_ctg_id
-                            ORDER BY product_info.product_id DESC 
-                            LIMIT 10";
+                            WHERE product_info.product_type = 'new_arrival'
+                            ORDER BY product_info.product_id DESC";
 
                     $result = mysqli_query($conn, $sql);
                     
@@ -449,7 +449,7 @@ include 'cartBar.php';
                 </div>
                 <div class="btn-align-end">
                     <a href="shop.php">
-                        <button class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
+                        <button class="btn btn-dark btn-see-all">See All The Products <i class="ri-arrow-right-line"></i></button>
                     </a>
                 </div>
             </div>
@@ -460,7 +460,9 @@ include 'cartBar.php';
                     $sql = "SELECT product_info.*, main_category.main_ctg_name 
                             FROM product_info 
                             JOIN main_category 
-                            ON product_info.main_ctg_id = main_category.main_ctg_id LIMIT 10";
+                            ON product_info.main_ctg_id = main_category.main_ctg_id
+                            WHERE product_info.product_type = 'top_selling'
+                            ORDER BY product_info.product_id DESC";
                     $result = mysqli_query($conn, $sql);
                     
                     $products = array();
@@ -532,7 +534,7 @@ include 'cartBar.php';
                                         <p>Explore All The '.$categoryName.' Products</p>
                                     </div>
                                     <div class="btn-align-end">
-                                        <button onclick="window.location.href=\'category.php?main_ctg_id='.$categoryId.'\';" class="btn btn-dark btn-see-all">See All The Procuts <i class="ri-arrow-right-line"></i></button>
+                                        <button onclick="window.location.href=\'category.php?main_ctg_id='.$categoryId.'\';" class="btn btn-dark btn-see-all">See All The Products <i class="ri-arrow-right-line"></i></button>
                                     </div>
                                 </div>
                                 <br><hr><br>
@@ -573,6 +575,57 @@ include 'cartBar.php';
         
             
     </div> 
+
+
+        <!-- all Product -->
+        <section class="top-selling py-5 bg-gray1">
+        <div class="container">
+            <div class="grid-container-2x">
+                <div class="title-align-left">
+                    <h1>All Products</h1>
+                    <p>Explore all the products</p>
+                </div>
+                <div class="btn-align-end">
+                    <a href="shop.php">
+                        <button class="btn btn-dark btn-see-all">See All The Products <i class="ri-arrow-right-line"></i></button>
+                    </a>
+                </div>
+            </div>
+            <br><hr><br>
+            <div class="grid-container top-selling-products">
+                <!-- All Product Card Will Add Here Dynamically -->
+                <?php
+                    $sql = "SELECT product_info.*, main_category.main_ctg_name 
+                            FROM product_info 
+                            JOIN main_category 
+                            ON product_info.main_ctg_id = main_category.main_ctg_id
+                            ORDER BY product_info.product_id DESC";
+                    $result = mysqli_query($conn, $sql);
+                    
+                    $products = array();
+                    while ($item = mysqli_fetch_array($result)) {
+                        echo "<div class='card' product-id='$item[product_id]' product-title='$item[product_title]' product-img='img/$item[product_img1]' product-price='$item[product_price]' product-quantity='1'>
+                        <img onclick='window.location.href=\"product.php?pi=$item[product_id]\"' src='img/$item[product_img1]' class='card-img-top' alt='img'>
+                        <div class='card-body'>
+                            <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[product_title]</h6>
+                            <p onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>$item[main_ctg_name]</p>
+
+                            <div class='price-inf' style='display: flex; justify-content: space-between;'>
+                                <h6 onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>BDT $item[product_price]</h6>
+                                <h6 style='text-decoration: line-through; color: var(--theme);' onclick='window.location.href=\"product.php?pi=$item[product_id]\"'>BDT $item[product_regular_price]</h6>
+                            </div>
+
+                            <button onclick='addToCart(this)' class='btn btn-outline-dark'><span>Add to Cart</span> <i class='ri-shopping-bag-line'></i></button>
+                            <a href='product.php?pi=$item[product_id]'>
+                                <button class='btn btn-dark'><span>Order Now</span> <i class='ri-shopping-cart-2-line'></i></button>
+                            </a>
+                        </div>
+                    </div>";
+                    }
+                ?>
+            </div>
+        </div>
+    </section>
     
 </div>
 <!--==========================================-->

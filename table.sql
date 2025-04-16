@@ -50,6 +50,8 @@ CREATE TABLE product_info (
     product_img2 VARCHAR(255),
     product_img3 VARCHAR(255),
     product_img4 VARCHAR(255),
+    created_at timestamp NOT NULL DEFAULT current_timestamp(),
+    product_type text NOT NULL
     FOREIGN KEY (main_ctg_id) REFERENCES main_category(main_ctg_id) ON DELETE CASCADE,
     FOREIGN KEY (sub_ctg_id) REFERENCES sub_category(sub_ctg_id) ON DELETE CASCADE
 );

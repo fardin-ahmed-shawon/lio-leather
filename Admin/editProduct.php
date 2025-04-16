@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_keyword = $_POST['product_keyword'];
     $product_code = $_POST['product_code'];
     $product_description = $_POST['product_description'];
+    $product_type = $_POST['product_type'];
 
     // Array to store image details
     $images = [
@@ -107,9 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($uploadSuccess) {
         // Update query
-        $query = "UPDATE product_info SET product_title = ?, product_regular_price = ?, product_price = ?, main_ctg_id = ?, sub_ctg_id = ?, available_stock = ?, product_keyword = ?, product_code = ?, product_description = ?, product_img1 = ?, product_img2 = ?, product_img3 = ?, product_img4 = ? WHERE product_id = ?";
+        $query = "UPDATE product_info SET product_title = ?, product_regular_price = ?, product_price = ?, main_ctg_id = ?, sub_ctg_id = ?, available_stock = ?, product_keyword = ?, product_code = ?, product_description = ?, product_img1 = ?, product_img2 = ?, product_img3 = ?, product_img4 = ?, product_type = ? WHERE product_id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sddssisssssssi", $product_title, $product_regular_price, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $product_keyword, $product_code, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3], $productId);
+        $stmt->bind_param("sddssissssssssi", $product_title, $product_regular_price, $product_price, $product_main_ctg_id, $product_sub_ctg_id, $available_stock, $product_keyword, $product_code, $product_description, $compressedFiles[0], $compressedFiles[1], $compressedFiles[2], $compressedFiles[3], $product_type, $productId);
 
         if ($stmt->execute()) {
             echo "<script>alert('Product updated successfully!'); window.location.href='viewProduct.php';</script>";
@@ -247,9 +248,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <!-- product code -->
                         <div class="input-box">
-                          <span class="details">Product Code *</span>
-                          <input name="product_code" type="text" placeholder="Enter your product code" value="<?php echo htmlspecialchars($product['product_code']); ?>" required>
+                          <span class="details">Product Code</span>
+                          <input name="product_code" type="text" placeholder="Enter your product code" value="<?php echo htmlspecialchars($product['product_code']); ?>">
                         </div>
+
+                        <!-- product type -->
+                        <div class="input-box">
+                          <span class="details">Choose Product Type</span>
+                          <select id="product_type" name="product_type">
+                            <option value="">Select Product Type</option>
+                            <option value='new_arrival' <?php echo ($product['product_type'] == 'new_arrival') ? 'selected' : ''; ?>>New Arrival</option>
+                            <option value='top_selling' <?php echo ($product['product_type'] == 'top_selling') ? 'selected' : ''; ?>>Top Selling</option>
+                          </select>
+                        </div>
+
                         <!-- Description -->
 
                         <!--  Script For Text Editor -->

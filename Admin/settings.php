@@ -7,6 +7,8 @@ if (!isset($_SESSION['admin'])) {
 // database connection
 include('database/dbConnection.php');
 
+
+
 // admin password change
 $sql = "UPDATE admin_info 
 SET admin_password = ? 
@@ -43,6 +45,53 @@ if (isset($_POST['changePass'])) {
 // }
 
 ?>
+
+
+<?php
+
+// if (isset($_POST['submit'])) {
+
+//     $old_password =  $_POST['oldPassword'];
+
+//     $new_password1 = $_POST['newPassword'];
+//     $new_password2 = $_POST['confirmPassword'];
+
+
+//     // get user id
+//     $admin_username = $_SESSION['admin'];
+
+//     if ($new_password1 == $new_password2) {
+//         $sql = "SELECT * FROM admin_info WHERE admin_username = '$admin_username' and admin_password = '$old_password'";
+
+//         $result = mysqli_query($con, $sql);
+//         $data = mysqli_fetch_assoc($result);
+//         $count = mysqli_num_rows($result);
+
+//         if($count > 0){
+//             // update password
+//             $new_password = $new_password1;
+//             $sql2 = "UPDATE admin_info SET admin_password = '$new_password' WHERE admin_username = '$admin_username'";
+
+//             if (mysqli_query($con, $sql2)) {
+//                 // echo '<div class="alert alert-success" role="alert">Password Updated Successfully!</div>';
+//                 $password_updated_status = "Password Successfully Updated!";
+//             } else {
+//                 echo "Error updating password: " . mysqli_error($con);
+//             }
+
+//         } else {
+//           $password_updated_status = "Old Password Does Not Match!";
+//         }
+
+//     } else {
+//       $password_updated_status = "Password Does Not Match!";
+//     }
+// }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
