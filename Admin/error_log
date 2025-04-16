@@ -1,0 +1,10 @@
+[19-Mar-2025 15:14:42 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'About' for key 'main_ctg_name' in /home/liooxzpx/public_html/Admin/insertCategory.php:67
+Stack trace:
+#0 /home/liooxzpx/public_html/Admin/insertCategory.php(67): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liooxzpx/public_html/Admin/insertCategory.php on line 67
+[19-Mar-2025 18:40:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'Key Chain' for key 'sub_ctg_name' in /home/liooxzpx/public_html/Admin/insertCategory.php:91
+Stack trace:
+#0 /home/liooxzpx/public_html/Admin/insertCategory.php(91): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liooxzpx/public_html/Admin/insertCategory.php on line 91
