@@ -42,6 +42,13 @@ if (isset($_SESSION['phone'])) {
             transition: width 3s linear;
             width: 0;
         }
+        .user-details .input-box input {
+            border-color:rgb(255, 189, 48);
+        }
+        .user-details .input-box input:focus,
+        .user-details .input-box input:valid {
+            border-color:rgb(255, 189, 48);
+        }
     </style>
 </head>
 <body>
@@ -121,10 +128,10 @@ include 'cartBar.php';
                             <span class="gender">Female</span>
                             </label>
                             <!-- Label for Prefer not to say -->
-                            <label for="dot-3">
+                            <!-- <label for="dot-3">
                             <span class="dot three"></span>
                             <span class="gender">Others</span>
-                            </label>
+                            </label> -->
                         </div>
                     </div>
                     <br>

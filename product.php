@@ -119,8 +119,8 @@ include 'cartBar.php';
                                     <p class='description'>{$product['product_description']}</p>
 
                                     <div class='price-inf' style='display: flex; justify-content: space-between;'>
-                                        <h3 class='price'>Tk. {$product['product_price']}</h3>
-                                        <h3 style='text-decoration: line-through; color: var(--theme);' class='price'>Tk. {$product['product_regular_price']}</h3>
+                                        <h3 class='price'>BDT {$product['product_price']}</h3>
+                                        <h3 style='text-decoration: line-through; color: var(--theme);' class='price'>BDT {$product['product_regular_price']}</h3>
                                     </div>
                                     <br>";
 

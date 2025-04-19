@@ -43,6 +43,13 @@ if (isset($_SESSION['phone'])) {
             transition: width 3s linear;
             width: 0;
         }
+        .user-details .input-box input {
+            border-color:rgb(255, 189, 48);
+        }
+        .user-details .input-box input:focus,
+        .user-details .input-box input:valid {
+            border-color:rgb(255, 189, 48);
+        }
     </style>
 </head>
 <body>

@@ -172,6 +172,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             z-index: 9999;
             display: none;
         }
+        .user-details .input-box input {
+            border-color:rgb(255, 189, 48);
+        }
+        .user-details .input-box input:focus,
+        .user-details .input-box input:valid {
+            border-color:rgb(255, 189, 48);
+        }
     </style>
 
 </head>
@@ -238,9 +245,15 @@ include 'cartBar.php';
                                 <label for="outside">Outside Dhaka</label>
                                 <br><br>
                                 <i>
-                                    <p class="text-muted">* Delivery Charge Inside Dhaka 70 Tk.</p>
-                                    <p class="text-muted">* Delivery Charge Outside Dhaka 130 Tk.</p>
+                                    <p class="text-muted">* Delivery Charge Inside Dhaka 80 Tk.</p>
+                                    <p class="text-muted">* Delivery Charge Outside Dhaka 150 Tk.</p>
                                 </i>
+                                <br>
+                                <h5>Courier Partner: "Steadfast"</h5>
+                                <br>
+                                <p class="text-danger"><i>Note: Your Order is expected to be delivered within 5 to 7 working days maximum. We appreciate your patience & support</i></p>
+                                <br>
+                                <h5>"Thank you for shopping with Lioo."</h5>
                             </div>
                         </div>
                     </div>
