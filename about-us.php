@@ -4,13 +4,14 @@ if (isset($_SESSION['phone'])) {
     header("Location: profile.php");
     exit();
 }
+include 'database/dbConnection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lioobd | Login</title>
+    <title>Lioobd</title>
     
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -59,49 +60,38 @@ include 'cartBar.php';
 
 
 <!--============================================-->
-<!--============ START LOGIN SECTION ==========-->
+<!--============ START Main SECTION ==========-->
 <!--============================================-->
 <section class="account py-5">
     <div class="container js-waypoint-sticky">
-        <h4 class="msg-box text-center">
+        
+
+        <div class="card">
+            <div class="card-body py-5">
+                
             <?php
-                echo $error;
+                $query = "SELECT about_us FROM footer_info"; // Adjust LIMIT as needed
+                $result = mysqli_query($conn, $query);
+
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $row = mysqli_fetch_assoc($result);
+                    $about_us_content = $row['about_us'];
+                } else {
+                    $about_us_content = "No content available.";
+                }
+
+                echo $about_us_content;
+
             ?>
-        </h4>
-        <h1 class="text-center">Account</h1>
-        <br>
-        <div class="login">
-            <!-- Title section -->
-            <div class="title">Login</div>
-            <div class="content">
-              <!-- Login form -->
-              <form action="#" method="post">
-                <div class="user-details full-input-box">
-                  <!-- Input for phone number -->
-                  <div class="input-box">
-                    <span class="details">Phone Number</span>
-                    <input name="phone" type="text" placeholder="Enter your number" required>
-                  </div>
-                  <!-- Input for Password -->
-                  <div class="input-box">
-                    <span class="details">Password</span>
-                    <input name="password" type="password" placeholder="Enter your password" required>
-                  </div>
-                </div>
-                <br>
-                <p>Don't have an account ? <a style="color: var(--theme)" href="registration.php">Register</a></p>
-                <!-- Submit button -->
-                <div class="button">
-                  <input type="submit" value="Login">
-                </div>
-              </form>
+
             </div>
         </div>
-        <br><hr>
+
+
     </div>
 </section>
 <!--===========================================-->
-<!--============ END LOGIN SECTION ============-->
+<!--============ END Main SECTION ============-->
 <!--===========================================-->
 
 
@@ -158,66 +148,9 @@ include 'bottomNavBar.php';
     myFunction();
     }
 
-    // Print Login error Message
-    function printErrorMsg() {
-            let msg_box = document.querySelector(".msg-box");
-            msg_box.style.display = "block";
-            msg_box.innerText = "Invalid phone number or password";
-            let timeBar = document.createElement("div");
-            timeBar.className = "time-bar";
-            msg_box.appendChild(timeBar);
-            setTimeout(() => {
-                msg_box.style.display = "none";
-                msg_box.removeChild(timeBar);
-            }, 3000);
-            setTimeout(() => {
-                timeBar.style.width = "100%";
-            }, 10);
-    }
 
 </script>
 
-<?php
-// error_reporting(0);
-include 'database/dbConnection.php'; // Include database connection file
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $phone = $_POST['phone'];
-    $password = $_POST['password'];
-
-    // Query to check if the user exists
-    $query = "SELECT * FROM user_info WHERE user_phone='$phone'";
-    $result = mysqli_query($conn, $query);
-
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        if (password_verify($password, $user['user_password'])) {
-            // Set value
-            $_SESSION['id'] = $user['user_id'];
-            $_SESSION['firstname'] = $user['user_fName'];
-            $_SESSION['lastname'] = $user['user_lName'];
-            $_SESSION['phone'] = $user['user_phone'];
-            $_SESSION['email'] = $user['user_email'];
-            // header("Location: profile.php");
-            if (isset($_GET['rd'])) {
-                ?>
-                <meta http-equiv="refresh" content="0;url=checkout.php">
-                <?php
-                exit();
-            } else {
-                ?>
-                <meta http-equiv="refresh" content="0;url=profile.php">
-                <?php
-                exit();
-            }
-        } else {
-            echo "<script>printErrorMsg();</script>";
-        }
-    } else {
-        echo "<script>printErrorMsg();</script>";
-    }
-}
-?>
 
 </body>
 </html>

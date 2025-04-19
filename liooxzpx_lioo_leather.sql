@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 15, 2025 at 09:08 PM
--- Server version: 10.6.21-MariaDB-cll-lve-log
--- PHP Version: 8.3.19
+-- Host: 127.0.0.1
+-- Generation Time: Apr 16, 2025 at 06:07 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,6 +40,33 @@ CREATE TABLE `admin_info` (
 
 INSERT INTO `admin_info` (`admin_id`, `admin_username`, `admin_password`, `admin_picture`) VALUES
 (1, 'lioo_39_', 'l87654321o', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `footer_info`
+--
+
+CREATE TABLE `footer_info` (
+  `about_us` text NOT NULL,
+  `contact_us` text NOT NULL,
+  `faq` text NOT NULL,
+  `terms_of_use` text NOT NULL,
+  `privacy_policy` text NOT NULL,
+  `shipping_delivery` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `footer_info`
+--
+
+INSERT INTO `footer_info` (`about_us`, `contact_us`, `faq`, `terms_of_use`, `privacy_policy`, `shipping_delivery`) VALUES
+('', '<p>sagbsdHB</p><p>SAG</p>', '', '', '', ''),
+('', '', '<p><b>edgvdfghb</b></p><p><b>\\rasfgscgbfdvb</b></p>', '', '', ''),
+('<ul><li>sgcbsadgbcxb</li><li>sagbcx</li><ul><li>safgvcb&nbsp;</li></ul></ul><p><!--  --></p>', '', '', '', '', ''),
+('', '', '', 'edgfbvcnn&nbsp;', '', ''),
+('', '', '', '', '<p>sa<u>gbcx</u></p><p><u>sadgbcxb</u></p><p><u>safgcxb</u></p>', ''),
+('', '', '', '', '', '<ol><li style=\"text-align: justify;\">sagcb&nbsp;</li><li style=\"text-align: justify;\">sdgbvc</li><li style=\"text-align: justify;\">sdfgv n</li><li style=\"text-align: justify;\">dsgb3534tyrgf</li></ol>');
 
 -- --------------------------------------------------------
 
@@ -188,21 +215,22 @@ CREATE TABLE `product_info` (
   `product_img2` varchar(255) DEFAULT NULL,
   `product_img3` varchar(255) DEFAULT NULL,
   `product_img4` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `product_type` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_info`
 --
 
-INSERT INTO `product_info` (`product_id`, `product_title`, `product_regular_price`, `product_price`, `main_ctg_id`, `sub_ctg_id`, `available_stock`, `size_option`, `product_keyword`, `product_code`, `product_description`, `product_img1`, `product_img2`, `product_img3`, `product_img4`, `created_at`) VALUES
-(6, 'Classic Minimalist Wallet', 1000, 900, 6, 9, 10, 'Default', 'Card holdder', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 2 cash chamber&nbsp;</div><div>âœ” 3 card slots</div><div>âœ” 1 Document Chamber (Outside)</div><div>&nbsp;</div><div><br></div><div><b>Product Colour:</b> \"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4.5 inches</div><div>Width: 3.3 inches</div><div><br></div><div><br></div> ', '../img/compressed_Classic Minimalist Wallet (1).jpg', '../img/compressed_Classic Minimalist Wallet (7).jpg', '../img/compressed_Classic Minimalist Wallet (8).jpg', '../img/compressed_Classic Minimalist Wallet (9).jpg', '2025-03-21 15:25:37'),
-(7, 'Classic Bi-fold Wallet', 2199, 1850, 5, 5, 10, 'Default', 'Bifold wallet', '3465645', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 2 cash compartment&nbsp;</div><div>âœ” 4 card slots&nbsp;</div><div>âœ” 2 hidden chamber&nbsp;</div><div><br></div><div><b>Product Colour: </b>\"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 3.4 inches</div><div>Width: 4.3 inches</div> ', '../img/compressed_Classic Bi-fold wallet (1).jpg', '../img/compressed_Classic Bi-fold wallet (6).jpg', '../img/compressed_Classic Bi-fold wallet (5).jpg', '../img/compressed_Classic Bi-fold wallet (4).jpg', '2025-03-21 15:25:37'),
-(8, 'Classic Long Wallet', 2000, 1850, 5, 3, 10, 'Default', 'Long wallet', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 1 mobile compartment&nbsp;</div><div>âœ” 1 cash compartment&nbsp;</div><div>âœ” 8 card slots&nbsp;</div><div><br></div><div><b>Product Colour:</b> \"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 7.6 inches</div><div>Width: 3.6 inches</div> ', '../img/compressed_Classic Long Wallet (6).jpg', '../img/compressed_Classic Long Wallet (1).jpg', '../img/compressed_Classic Long Wallet (3).jpg', '../img/compressed_Classic Long Wallet (4).jpg', '2025-03-21 15:25:37'),
-(9, 'Classic Passport Wallet', 1500, 1450, 5, 12, 10, 'Default', 'Passport holder', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ”&nbsp; 1 passport compartment ( 3 or 4 passport can be carried )</div><div>âœ” 1 bill compartment</div><div>âœ” 1 boarding pass compartment&nbsp;</div><div>âœ” 2 card slots</div><div><br></div><div><b>Product Colour: </b>\"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 5.5 inches</div><div>Width: 4.1 inches</div><div><br></div> ', '../img/compressed_Classic Passport Wallet (1).jpg', '../img/compressed_Classic Passport Wallet (5).jpg', '../img/compressed_Classic Passport Wallet (3).jpg', '../img/compressed_Classic Passport Wallet (7).jpg', '2025-03-21 15:25:37'),
-(10, 'Classic Pouch  (Unisex)', 2300, 2050, 5, 3, 10, 'Default', 'Pouch', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 1 mobile compartment</div><div>âœ” 1 cash compartment&nbsp;</div><div>âœ” 2 card slots</div><div><br></div><div><b>Product Colour:</b> Stone Grey</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4&nbsp; inches</div><div>Width: 7.6&nbsp; inches</div><div><br></div> ', '../img/compressed_Unisex Classic Pouch (1).jpg', '../img/compressed_Unisex Classic Pouch (7).jpg', '../img/compressed_Unisex Classic Pouch (3).jpg', '../img/compressed_Unisex Classic Pouch (9).jpg', '2025-03-21 15:25:37'),
-(11, 'Classic Money Clip Wallet', 1750, 1550, 5, 6, 10, 'Default', 'wallet', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 1 Clip For Cash</div><div>âœ” 4 card slots&nbsp;</div><div>&nbsp;</div><div><b>Product Colour:</b> \"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4.5 inches</div><div>Width: 3.1 inches</div><div><br></div> ', '../img/compressed_Classic Money Clip Wallet (1).jpg', '../img/compressed_Classic Money Clip Wallet (5).jpg', '../img/compressed_Classic Money Clip Wallet (7).jpg', '../img/compressed_Classic Money Clip Wallet (6).jpg', '2025-03-21 15:25:37'),
-(12, 'Classic Card Holder', 999, 800, 6, 10, 10, 'Default', 'Card holder', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 4 card slots or 2 card slot with 2 cash slot ( Depends on your user experience)</div><div>&nbsp;</div><div><b>Product Colour: </b>\"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4.1 inches</div><div>Width: 3.2 inches</div> ', '../img/compressed_Classic Card Holder (1).jpg', '../img/compressed_Classic Card Holder (3).jpg', '../img/compressed_Classic Card Holder (2).jpg', '../img/compressed_Classic Card Holder (4).jpg', '2025-03-21 15:25:37');
+INSERT INTO `product_info` (`product_id`, `product_title`, `product_regular_price`, `product_price`, `main_ctg_id`, `sub_ctg_id`, `available_stock`, `size_option`, `product_keyword`, `product_code`, `product_description`, `product_img1`, `product_img2`, `product_img3`, `product_img4`, `created_at`, `product_type`) VALUES
+(6, 'Classic Minimalist Wallet', 1000, 900, 6, 9, 10, 'Default', 'Card holdder', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 2 cash chamber&nbsp;</div><div>âœ” 3 card slots</div><div>âœ” 1 Document Chamber (Outside)</div><div>&nbsp;</div><div><br></div><div><b>Product Colour:</b> \"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4.5 inches</div><div>Width: 3.3 inches</div><div><br></div><div><br></div> ', '../img/compressed_Classic Minimalist Wallet (1).jpg', '../img/compressed_Classic Minimalist Wallet (7).jpg', '../img/compressed_Classic Minimalist Wallet (8).jpg', '../img/compressed_Classic Minimalist Wallet (9).jpg', '2025-03-21 15:25:37', ''),
+(7, 'Classic Bi-fold Wallet', 2199, 1850, 5, 5, 10, 'Default', 'Bifold wallet', '3465645', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 2 cash compartment&nbsp;</div><div>âœ” 4 card slots&nbsp;</div><div>âœ” 2 hidden chamber&nbsp;</div><div><br></div><div><b>Product Colour: </b>\"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 3.4 inches</div><div>Width: 4.3 inches</div> ', '../img/compressed_Classic Bi-fold wallet (1).jpg', '../img/compressed_Classic Bi-fold wallet (6).jpg', '../img/compressed_Classic Bi-fold wallet (5).jpg', '../img/compressed_Classic Bi-fold wallet (4).jpg', '2025-03-21 15:25:37', 'top_selling'),
+(8, 'Classic Long Wallet', 2000, 1850, 5, 3, 10, 'Default', 'Long wallet', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 1 mobile compartment&nbsp;</div><div>âœ” 1 cash compartment&nbsp;</div><div>âœ” 8 card slots&nbsp;</div><div><br></div><div><b>Product Colour:</b> \"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 7.6 inches</div><div>Width: 3.6 inches</div> ', '../img/compressed_Classic Long Wallet (6).jpg', '../img/compressed_Classic Long Wallet (1).jpg', '../img/compressed_Classic Long Wallet (3).jpg', '../img/compressed_Classic Long Wallet (4).jpg', '2025-03-21 15:25:37', ''),
+(9, 'Classic Passport Wallet', 1500, 1450, 5, 12, 10, 'Default', 'Passport holder', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ”&nbsp; 1 passport compartment ( 3 or 4 passport can be carried )</div><div>âœ” 1 bill compartment</div><div>âœ” 1 boarding pass compartment&nbsp;</div><div>âœ” 2 card slots</div><div><br></div><div><b>Product Colour: </b>\"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 5.5 inches</div><div>Width: 4.1 inches</div><div><br></div> ', '../img/compressed_Classic Passport Wallet (1).jpg', '../img/compressed_Classic Passport Wallet (5).jpg', '../img/compressed_Classic Passport Wallet (3).jpg', '../img/compressed_Classic Passport Wallet (7).jpg', '2025-03-21 15:25:37', 'new_arrival'),
+(10, 'Classic Pouch  (Unisex)', 2300, 2050, 5, 3, 10, 'Default', 'Pouch', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 1 mobile compartment</div><div>âœ” 1 cash compartment&nbsp;</div><div>âœ” 2 card slots</div><div><br></div><div><b>Product Colour:</b> Stone Grey</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4&nbsp; inches</div><div>Width: 7.6&nbsp; inches</div><div><br></div> ', '../img/compressed_Unisex Classic Pouch (1).jpg', '../img/compressed_Unisex Classic Pouch (7).jpg', '../img/compressed_Unisex Classic Pouch (3).jpg', '../img/compressed_Unisex Classic Pouch (9).jpg', '2025-03-21 15:25:37', 'top_selling'),
+(11, 'Classic Money Clip Wallet', 1750, 1550, 5, 6, 10, 'Default', 'wallet', '', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 1 Clip For Cash</div><div>âœ” 4 card slots&nbsp;</div><div>&nbsp;</div><div><b>Product Colour:</b> \"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4.5 inches</div><div>Width: 3.1 inches</div><div><br></div> ', '../img/compressed_Classic Money Clip Wallet (1).jpg', '../img/compressed_Classic Money Clip Wallet (5).jpg', '../img/compressed_Classic Money Clip Wallet (7).jpg', '../img/compressed_Classic Money Clip Wallet (6).jpg', '2025-03-21 15:25:37', 'new_arrival'),
+(12, 'Classic Card Holder', 999, 800, 6, 10, 10, 'Default', 'Card holder', '3245346', '<div>A timeless accessory made from export-quality oil pull-up leather, ensuring durability and sophistication.</div><div><br></div><div><b>Features:</b></div><div><br></div><div>âœ” 4 card slots or 2 card slot with 2 cash slot ( Depends on your user experience)</div><div>&nbsp;</div><div><b>Product Colour: </b>\"Stone Grey\"</div><div><br></div><div><b>Product Size:</b></div><div><br></div><div>Height: 4.1 inches</div><div>Width: 3.2 inches</div> ', '../img/compressed_Classic Card Holder (1).jpg', '../img/compressed_Classic Card Holder (3).jpg', '../img/compressed_Classic Card Holder (2).jpg', '../img/compressed_Classic Card Holder (4).jpg', '2025-03-21 15:25:37', 'new_arrival');
 
 -- --------------------------------------------------------
 
@@ -416,7 +444,7 @@ ALTER TABLE `payment_info`
 -- AUTO_INCREMENT for table `product_info`
 --
 ALTER TABLE `product_info`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `review_table`

@@ -193,39 +193,42 @@ include 'cartBar.php';
 <div class="pb-5 js-waypoint-sticky">
 
     <!-- Carousel Slider Area -->
-    <div class="img-carousel-area">
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <?php 
-                $query = "SELECT slider_id, slider_img FROM slider";
-                $result = mysqli_query($conn, $query);
-                if (mysqli_num_rows($result) > 0) {
-                    $count = 1;
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        if ($count == 1) {
-                            echo '<div class="carousel-item active">';
-                            echo '<img src="img/'.htmlspecialchars($row['slider_img']).'" class="d-block w-100" alt="...">';
-                            echo '</div>';
-                        } else {
-                            echo '<div class="carousel-item">';
-                            echo '<img src="img/'.htmlspecialchars($row['slider_img']).'" class="d-block w-100" alt="...">';
-                            echo '</div>';
+    <div class="container">
+        <br>
+        <div class="img-carousel-area">
+            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner rounded">
+                <?php 
+                    $query = "SELECT slider_id, slider_img FROM slider";
+                    $result = mysqli_query($conn, $query);
+                    if (mysqli_num_rows($result) > 0) {
+                        $count = 1;
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            if ($count == 1) {
+                                echo '<div class="carousel-item active rounded">';
+                                echo '<img src="img/'.htmlspecialchars($row['slider_img']).'" class="d-block w-100 rounded" alt="...">';
+                                echo '</div>';
+                            } else {
+                                echo '<div class="carousel-item">';
+                                echo '<img src="img/'.htmlspecialchars($row['slider_img']).'" class="d-block w-100 rounded" alt="...">';
+                                echo '</div>';
+                            }
+                            $count++;
                         }
-                        $count++;
                     }
-                }
-              ?>  
+                ?>  
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
         </div>
-    </div>
+    </div><br><br><br>
 
     <!-- Info Area -->
     <!-- <div class="info-area">

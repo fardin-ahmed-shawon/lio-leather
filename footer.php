@@ -36,17 +36,16 @@
         <div class="about">
             <h6>about</h6>
             <br>
-            <p><a href="#">About Us</a></p>
-            <p><a href="#">Contact Us</a></p>
-            <p><a href="#">Help Center</a></p>
-            <p><a href="#">FAQ</a></p>
+            <p><a href="about-us.php">About Us</a></p>
+            <p><a href="contact-us.php">Contact Us</a></p>
+            <p><a href="faq.php">FAQ</a></p>
         </div>
         <div class="help">
             <h6>help & guide</h6>
             <br>
-            <p><a href="#">Term Of Use</a></p>
-            <p><a href="#">Privacy & Policy</a></p>
-            <p><a href="#">Shipping & Delivery</a></p>
+            <p><a href="terms-use.php">Term Of Use</a></p>
+            <p><a href="privacy-policy.php">Privacy & Policy</a></p>
+            <p><a href="shipping-delivery.php">Shipping & Delivery</a></p>
         </div>
 
         <div class="newsletter">

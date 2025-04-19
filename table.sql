@@ -51,7 +51,7 @@ CREATE TABLE product_info (
     product_img3 VARCHAR(255),
     product_img4 VARCHAR(255),
     created_at timestamp NOT NULL DEFAULT current_timestamp(),
-    product_type text NOT NULL
+    product_type text NOT NULL,
     FOREIGN KEY (main_ctg_id) REFERENCES main_category(main_ctg_id) ON DELETE CASCADE,
     FOREIGN KEY (sub_ctg_id) REFERENCES sub_category(sub_ctg_id) ON DELETE CASCADE
 );
@@ -119,5 +119,11 @@ CREATE TABLE review_table (
 );
 
 
-ALTER TABLE product_info
-ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+CREATE TABLE `footer_info` (
+  `about_us` text NOT NULL,
+  `contact_us` text NOT NULL,
+  `faq` text NOT NULL,
+  `terms_of_use` text NOT NULL,
+  `privacy_policy` text NOT NULL,
+  `shipping_delivery` text NOT NULL
+);

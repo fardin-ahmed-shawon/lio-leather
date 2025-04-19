@@ -1,17 +1,16 @@
 <?php
 session_start();
-if (!isset($_SESSION['phone'])) {
-    header("Location: login.php");
+if (isset($_SESSION['phone'])) {
+    header("Location: profile.php");
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lioobd | Profile</title>
+    <title>Lioobd</title>
     
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -20,14 +19,31 @@ if (!isset($_SESSION['phone'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/cartbar.css">
-    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/login.css">
 
     <!--========== Remixicon ==========-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <style>
+        .msg-box {
+            max-width: 500px;
+            margin: auto;
+            background: #ebebeb;
+            padding-top: 10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .time-bar {
+            height: 5px;
+            margin-top: 10px;
+            background-color: var(--theme);
+            transition: width 3s linear;
+            width: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -43,59 +59,19 @@ include 'cartBar.php';
 
 
 <!--============================================-->
-<!--============ START PROFILE SECTION =========-->
+<!--============ START Main SECTION ==========-->
 <!--============================================-->
-<section class="profile py-5 js-waypoint-sticky">
-    <div class="container">
-        <h1 class="text-center pb-5">Profile</h1>
-        <div class="profile-container">
-        <div style="overflow-x: auto;">
-            <div style="overflow-x: auto;">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>First Name</td>
-                                <td>:</td>
-                                <td><?php echo $_SESSION['firstname']; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Last Name</td>
-                                <td>:</td>
-                                <td><?php echo $_SESSION['lastname']; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <td>:</td>
-                                <td><?php echo $_SESSION['email']; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Phone Number</td>
-                                <td>:</td>
-                                <td><?php echo $_SESSION['phone']; ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div>
-            <br>
-            <div class="profile-btn-container">
-                <a href="editProfile.php">
-                    <button class="btn btn-dark">
-                        Edit Information <i class="ri-edit-box-line"></i>
-                    </button>
-                </a>    
-                <a href="logout.php">
-                    <button class="btn btn-dark">
-                       Logout <i class="ri-logout-box-line"></i>
-                    </button>
-                </a>
-            </div>
-        </div>
-        </div>
-        <br><hr>
+<section class="account py-5">
+    <div class="container js-waypoint-sticky">
+        
+
+        
+
+
     </div>
 </section>
 <!--===========================================-->
-<!--============ END PROFILE SECTION ==========-->
+<!--============ END Main SECTION ============-->
 <!--===========================================-->
 
 
@@ -120,6 +96,7 @@ include 'bottomNavBar.php';
 <script src="js/main.js"></script>
 <script src="js/cartCalculation.js"></script>
 <script src="js/search.js"></script>
+
 
 <script>
     function myFunction() {
@@ -150,7 +127,10 @@ include 'bottomNavBar.php';
     if (mediaQuery.matches) {
     myFunction();
     }
+
+
 </script>
-    
+
+
 </body>
 </html>

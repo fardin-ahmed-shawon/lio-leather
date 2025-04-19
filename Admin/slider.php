@@ -9,7 +9,7 @@ if (!isset($_SESSION['admin'])) {
 include('database/dbConnection.php'); 
 
 // Image Compression Function
-function compressImage($source, $destination, $quality = 95) {
+function compressImage($source, $destination, $quality = 100) {
     $imgInfo = getimagesize($source);
     if (!$imgInfo) return false;
 
@@ -23,7 +23,7 @@ function compressImage($source, $destination, $quality = 95) {
 
     // Resize Image to 800x800 (Square Shape)
     $newWidth = 1920;
-    $newHeight = 604;
+    $newHeight = 1080;
     $newImage = imagecreatetruecolor($newWidth, $newHeight);
     imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, imagesx($image), imagesy($image));
     $image = $newImage;
@@ -203,6 +203,7 @@ $result = mysqli_query($conn, $query);
                   <form action="" method="POST" enctype="multipart/form-data">
                     <div class="row">
                       <h1>Add Slider Image</h1>
+                      <h5>(1920 X 1080)</h5>
                       <div>
                           <label class="custum-file-upload" for="file">
                             <div class="icon">
