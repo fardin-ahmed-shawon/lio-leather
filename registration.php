@@ -97,17 +97,17 @@ include 'cartBar.php';
                         <!-- Input for Phone Number -->
                         <div class="input-box">
                             <span class="details">Phone Number</span>
-                            <input name="phone" type="text" placeholder="Enter your number" required>
+                            <input name="phone" type="text" placeholder="Enter your number" minlength="11" required>
                         </div>
                         <!-- Input for Password -->
                         <div class="input-box">
                             <span class="details">Password</span>
-                            <input name="password" type="password" placeholder="Enter your password" required>
+                            <input name="password" type="password" placeholder="Enter your password" minlength="8" required>
                         </div>
                         <!-- Input for Confirm Password -->
                         <div class="input-box">
                             <span class="details">Confirm Password</span>
-                            <input name="confirm_password" type="password" placeholder="Confirm your password" required>
+                            <input name="confirm_password" type="password" placeholder="Confirm your password" minlength="8" required>
                         </div>
                     </div>
                     <div class="gender-details">

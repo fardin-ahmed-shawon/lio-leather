@@ -223,7 +223,7 @@ include 'cartBar.php';
                             <!-- Input for phone number -->
                             <div class="input-box">
                                 <span class="details">Phone Number<i class="text-danger">*</i></span>
-                                <input name="phone" type="text" placeholder="Enter your number" required>
+                                <input name="phone" type="text" placeholder="Enter your number" minlength="11" required>
                             </div>
                             <!-- Input for email number -->
                             <div class="input-box">

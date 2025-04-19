@@ -167,6 +167,9 @@ include 'database/dbConnection.php';
             grid-auto-columns: calc((100% / 1) + 45px);
         }
         }
+        .card-body h6 {
+            font-weight: 500;
+        }
     </style>
 
 </head>

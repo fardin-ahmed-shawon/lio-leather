@@ -24,6 +24,9 @@
         .card {
             cursor: pointer;
         }
+        .card-body h6 {
+            font-weight: 500;
+        }
     </style>
 
 </head>
