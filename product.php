@@ -130,7 +130,7 @@ include 'cartBar.php';
                                         echo "<br>
                                     <br>
                                     <div class='btn-and-counter'>
-                                        <div class='counter'>
+                                        <div class='counter' style='border: 2px solid;'>
                                             <button onclick='minus()' class='minus'>-</button>
                                             <span class='num'>$quantity</span>
                                             <button onclick='plus()' class='plus'>+</button>

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Get the current timestamp in microseconds
         $timestamp = microtime(true) * 10000; // More digits by multiplying
         // Convert timestamp to a unique string
-        $uniqueString = 'INV-' . strtoupper(base_convert($timestamp, 10, 36));
+        $uniqueString = 'LBD-' . strtoupper(base_convert($timestamp, 10, 36));
         return $uniqueString;
     }
 

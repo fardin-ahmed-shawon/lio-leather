@@ -132,7 +132,7 @@
                                             <div class="content content<?php echo $index; ?>">
                                                 <?php
                                                     while ($subCategory = $subCategoriesResult->fetch_assoc()) {
-                                                        echo '<a href="subCategory.php?sub_ctg_id=' . $subCategory['sub_ctg_id'] . '">' . $subCategory['sub_ctg_name'] . '</a>';
+                                                        echo '<a style="color: #FBB03B;" href="subCategory.php?sub_ctg_id=' . $subCategory['sub_ctg_id'] . '">' . $subCategory['sub_ctg_name'] . '</a>';
                                                     }
                                                 ?>
                                             </div>
