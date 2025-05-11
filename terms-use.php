@@ -44,6 +44,12 @@ include 'database/dbConnection.php';
             transition: width 3s linear;
             width: 0;
         }
+        .card-body ul li {
+            list-style: disc;
+        }
+        .card-body ol li {
+            list-style: decimal;
+        }
     </style>
 </head>
 <body>
@@ -70,17 +76,17 @@ include 'cartBar.php';
             <div class="card-body py-5">
                 
             <?php
-                $query = "SELECT about_us FROM footer_info"; // Adjust LIMIT as needed
+                $query = "SELECT terms_of_use FROM footer_info"; // Adjust LIMIT as needed
                 $result = mysqli_query($conn, $query);
 
                 if ($result && mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
-                    $about_us_content = $row['about_us'];
+                    $terms_of_use_content = $row['terms_of_use'];
                 } else {
-                    $about_us_content = "No content available.";
+                    $terms_of_use_content = "No content available.";
                 }
 
-                echo $about_us_content;
+                echo $terms_of_use_content;
 
             ?>
 

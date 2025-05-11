@@ -16,8 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Check if the description is not empty
     if (!empty($description)) {
         // Insert or update the about_us content in the footer_info table
-        $query = "INSERT INTO footer_info (privacy_policy) VALUES ('$description')
-                  ON DUPLICATE KEY UPDATE privacy_policy = '$description'";
+        $query = "INSERT INTO `footer_info` (`id`, `about_us`, `contact_us`, `faq`, `terms_of_use`, `privacy_policy`, `shipping_delivery`)
+                  VALUES (1, '', '', '', '', '$description', '')
+                  ON DUPLICATE KEY UPDATE
+                  `privacy_policy` = VALUES(`privacy_policy`);";
 
         if (mysqli_query($conn, $query)) {
             $product_added_status = "Privacy Policy content saved successfully!";
@@ -108,9 +110,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
                         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+                        <?php
+                            $query = "SELECT privacy_policy FROM footer_info LIMIT 1"; // Adjust LIMIT as needed
+                            $result = mysqli_query($conn, $query);
+
+                            if ($result && mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_assoc($result);
+                                $privacy_policy_content = $row['privacy_policy'];
+                            } else {
+                                $privacy_policy_content = "";
+                            }
+                        ?>
+
                         <div class="form-group m-auto"> 
                           <span class="details">Write Privacy & Policy *</span>
-                          <textarea id="summernote" rows="4" name="description" cols="58" class="mytextarea"> </textarea>
+                          <textarea id="summernote" rows="4" name="description" cols="58" class="mytextarea">
+                            <?php 
+                                echo htmlspecialchars($privacy_policy_content);
+                            ?>
+                          </textarea>
                         </div>
                         <br><br>
 

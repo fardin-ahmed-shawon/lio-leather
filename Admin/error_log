@@ -8,3 +8,9 @@ Stack trace:
 #0 /home/liooxzpx/public_html/Admin/insertCategory.php(91): mysqli_stmt->execute()
 #1 {main}
   thrown in /home/liooxzpx/public_html/Admin/insertCategory.php on line 91
+[25-Apr-2025 14:54:57 UTC] PHP Warning:  unlink(../img/Belt CDT4.jpg): No such file or directory in /home/liooxzpx/public_html/Admin/addProduct.php on line 101
+[25-Apr-2025 15:57:20 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'Limited Edition' for key 'main_ctg_name' in /home/liooxzpx/public_html/Admin/insertCategory.php:67
+Stack trace:
+#0 /home/liooxzpx/public_html/Admin/insertCategory.php(67): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/liooxzpx/public_html/Admin/insertCategory.php on line 67

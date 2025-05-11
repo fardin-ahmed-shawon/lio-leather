@@ -44,6 +44,12 @@ include 'database/dbConnection.php';
             transition: width 3s linear;
             width: 0;
         }
+        .card-body ul li {
+            list-style: disc;
+        }
+        .card-body ol li {
+            list-style: decimal;
+        }
     </style>
 </head>
 <body>
@@ -70,17 +76,17 @@ include 'cartBar.php';
             <div class="card-body py-5">
                 
             <?php
-                $query = "SELECT about_us FROM footer_info"; // Adjust LIMIT as needed
+                $query = "SELECT shipping_delivery FROM footer_info"; // Adjust LIMIT as needed
                 $result = mysqli_query($conn, $query);
 
                 if ($result && mysqli_num_rows($result) > 0) {
                     $row = mysqli_fetch_assoc($result);
-                    $about_us_content = $row['about_us'];
+                    $shipping_delivery_content = $row['shipping_delivery'];
                 } else {
-                    $about_us_content = "No content available.";
+                    $shipping_delivery_content = "No content available.";
                 }
 
-                echo $about_us_content;
+                echo $shipping_delivery_content;
 
             ?>
 

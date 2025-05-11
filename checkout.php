@@ -328,7 +328,7 @@ include 'cartBar.php';
                                                     <p>You need to send us Tk. <span class="text-danger send-amount"></span></p>
                                                     <br>
                                                     <p>Account Type: <span class="text-danger">Personal</span></p>
-                                                    <p>Account Number: <span class="text-danger">01XXXXXXXXX</span></p>
+                                                    <p>Account Number: <span class="text-danger">01611989240</span></p>
                                                 </div>
                                                 <br>
                                                 <!-- Input -->
@@ -359,7 +359,7 @@ include 'cartBar.php';
                                                     <p>You need to send us Tk. <span class="text-danger send-amount"></span></p>
                                                     <br>
                                                     <p>Account Type: <span class="text-danger">Personal</span></p>
-                                                    <p>Account Number: <span class="text-danger">01XXXXXXXXX</span></p>
+                                                    <p>Account Number: <span class="text-danger">01611989240</span></p>
                                                 </div><br>
                                                 <!-- Input -->
                                                 <div class="input-area" id="nagad-input-area"></div>
@@ -389,7 +389,7 @@ include 'cartBar.php';
                                                     <p>You need to send us Tk. <span class="text-danger send-amount"></span></p>
                                                     <br>
                                                     <p>Account Type: <span class="text-danger">Personal</span></p>
-                                                    <p>Account Number: <span class="text-danger">01XXXXXXXXX</span></p>
+                                                    <p>Account Number: <span class="text-danger">016119892409</span></p>
                                                 </div><br>
                                                 <!-- Input -->
                                                 <div class="input-area" id="rocket-input-area"></div>
@@ -419,7 +419,7 @@ include 'cartBar.php';
                                                     <p>You need to send us Tk.<span class="text-danger send-amount"></span></p>
                                                     <br>
                                                     <p>Account Type: <span class="text-danger">Personal</span></p>
-                                                    <p>Account Number: <span class="text-danger">01XXXXXXXXX</span></p>
+                                                    <p>Account Number: <span class="text-danger">01611989240</span></p>
                                                 </div><br>
                                                 <!-- Input -->
                                                 <div class="input-area" id="upay-input-area"></div>

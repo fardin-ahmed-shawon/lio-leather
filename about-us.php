@@ -44,6 +44,12 @@ include 'database/dbConnection.php';
             transition: width 3s linear;
             width: 0;
         }
+        .card-body ul li {
+            list-style: disc;
+        }
+        .card-body ol li {
+            list-style: decimal;
+        }
     </style>
 </head>
 <body>

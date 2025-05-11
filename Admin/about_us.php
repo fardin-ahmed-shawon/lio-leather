@@ -16,8 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Check if the description is not empty
     if (!empty($description)) {
         // Insert or update the about_us content in the footer_info table
-        $query = "INSERT INTO footer_info (about_us) VALUES ('$description')
-                  ON DUPLICATE KEY UPDATE about_us = '$description'";
+        $query = "INSERT INTO `footer_info` (`id`, `about_us`, `contact_us`, `faq`, `terms_of_use`, `privacy_policy`, `shipping_delivery`)
+                  VALUES (1, '$description', '', '', '', '', '')
+                  ON DUPLICATE KEY UPDATE
+                  `about_us` = VALUES(`about_us`);";
 
         if (mysqli_query($conn, $query)) {
             $product_added_status = "About Us content saved successfully!";
@@ -108,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
                         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-                        <!-- <?php
+                        <?php
                             $query = "SELECT about_us FROM footer_info LIMIT 1"; // Adjust LIMIT as needed
                             $result = mysqli_query($conn, $query);
 
@@ -118,14 +120,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             } else {
                                 $about_us_content = "";
                             }
-                        ?> -->
+                        ?>
 
                         <div class="form-group m-auto"> 
                           <span class="details">Write About Us *</span>
                           <textarea id="summernote" rows="4" name="description" cols="58" class="mytextarea">
-                            <!-- <?php 
+                            <?php 
                                 echo htmlspecialchars($about_us_content);
-                            ?> -->
+                            ?>
                           </textarea>
                         </div>
                         <br><br>

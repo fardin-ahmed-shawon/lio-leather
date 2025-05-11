@@ -16,8 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Check if the description is not empty
     if (!empty($description)) {
         // Insert or update the terms_of_use content in the footer_info table
-        $query = "INSERT INTO footer_info (terms_of_use) VALUES ('$description')
-                  ON DUPLICATE KEY UPDATE terms_of_use = '$description'";
+        $query = "INSERT INTO `footer_info` (`id`, `about_us`, `contact_us`, `faq`, `terms_of_use`, `privacy_policy`, `shipping_delivery`)
+                  VALUES (1, '', '', '', '$description', '', '')
+                  ON DUPLICATE KEY UPDATE
+                  `terms_of_use` = VALUES(`terms_of_use`);";
 
         if (mysqli_query($conn, $query)) {
             $product_added_status = "Terms Of Use content saved successfully!";
@@ -108,9 +110,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
                         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+                        <?php
+                            $query = "SELECT terms_of_use FROM footer_info LIMIT 1"; // Adjust LIMIT as needed
+                            $result = mysqli_query($conn, $query);
+
+                            if ($result && mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_assoc($result);
+                                $terms_of_use_content = $row['terms_of_use'];
+                            } else {
+                                $terms_of_use_content = "";
+                            }
+                        ?>
+
                         <div class="form-group m-auto"> 
                           <span class="details">Write Terms Of Use *</span>
-                          <textarea id="summernote" rows="4" name="description" cols="58" class="mytextarea"> </textarea>
+                          <textarea id="summernote" rows="4" name="description" cols="58" class="mytextarea">
+                            <?php 
+                                echo htmlspecialchars($terms_of_use_content);
+                            ?>
+                          </textarea>
                         </div>
                         <br><br>
 
